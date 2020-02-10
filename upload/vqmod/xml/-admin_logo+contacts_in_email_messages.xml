@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[Logo+Contacts in email messages]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[Fabrikator - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="admin/controller/sale/contact.php">
+<operation error="log">
+<search position="before"><![CDATA[$this->data['text_newsletter']]]></search>
+<add><![CDATA[
+	$this->data['text_regards'] = $this->language->get('text_regards');
+	$this->data['text_telephone'] = $this->language->get('text_telephone');
+	$this->data['text_fax'] = $this->language->get('text_fax');
+	$this->data['text_address'] = $this->language->get('text_address');
+]]></add>
+</operation>
+</file>
+
+<file name="admin/language/english/sale/contact.php">
+<operation error="log">
+<search position="before" error="log"><![CDATA[$_['text_newsletter']]]></search>
+<add><![CDATA[
+$_['text_regards'] = 'Best regards,<br />';
+$_['text_telephone']	= 'Tel: ';
+$_['text_fax'] = 'Fax: ';
+$_['text_address'] = 'Address: ';
+]]></add>
+</operation>
+</file>
+
+<file name="admin/view/template/common/header.tpl">
+<operation error="log">
+<search position="before" error="log"><![CDATA[</head>]]></search>
+<add><![CDATA[
+	<style type="text/css">#cke_contents_message {height:400px !important}</style>
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="before"><![CDATA[</head>]]></search>
+<add><![CDATA[
+	<style type="text/css">#cke_1_contents {height:400px !important}</style>
+]]></add>
+</operation>
+</file>
+
+<file name="admin/view/template/sale/contact.tpl">
+<operation error="log">
+<search position="replace" offset="1"><![CDATA[<td colspan="2"><span class="required">*</span> <?php echo $entry_message; ?><p>]]></search>
+<add><![CDATA[
+	<td colspan="2"><span class="required">*</span> <?php echo $entry_message; ?><p>
+	<textarea name="message">
+	<a href="<?php echo HTTP_CATALOG; ?>" target="_blank" ><img style="border:none" src="<?php echo HTTP_CATALOG . "image/" . $this->config->get('config_logo'); ?>" alt="<?php echo $this->config->get('config_name'); ?>" /></a>
+	<p></p><p></p><p></p><p></p><p></p>
+	<hr color="#aaa">
+	<?php echo $text_regards; ?>
+	<span style="font-size:20px"><?php echo $this->config->get('config_name'); ?></span><br />
+	<a href="<?php echo HTTP_CATALOG; ?>" target="_blank" /><?php echo HTTP_CATALOG; ?></a><br />
+	<?php echo $text_telephone; ?><?php echo $this->config->get('config_telephone') ?><br />
+	<?php if ($this->config->get('config_fax')) { ?>
+	<?php echo $text_fax; ?><?php echo $this->config->get('config_fax'); ?><br />
+	<?php } ?>
+	<?php echo $text_address; ?><?php echo $this->config->get('config_address'); ?>
+	</textarea>
+	</td>
+]]></add>
+</operation>
+</file>
+
+</modification>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[Set default timezone for PHP + DB]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[Tri Le - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="admin/view/template/setting/setting.tpl">
+<operation error="log">
+<search position="before" offset="1"><![CDATA[<td><?php echo $entry_country; ?></td>]]></search>
+<add><![CDATA[
+	<?php
+	$timezones = DateTimeZone::listIdentifiers(DateTimeZone::ALL);
+	$config_timezone = isset($this->request->post["config_timezone"]) ? $this->request->post["config_timezone"] : $this->config->get("config_timezone");
+	$timezone_options = "";
+	foreach ($timezones as $t) $timezone_options .= "<option value='$t' " . ($t == $config_timezone ? "selected" : "") . ">$t</option>";
+	$db_time = "Database time: " . $this->db->query("SELECT NOW() AS now")->row["now"];
+	$php_time = "PHP time: " . date("Y-m-d H:i:s");
+	?>
+	<script type="text/javascript">
+	html = "<tr>";
+	html += "  <td>Timezone:</td>";
+	html += "  <td><select name='config_timezone'>";
+	html += "<option value=''>Select</option><?php echo $timezone_options; ?>";
+	html += "  </select><div><?php echo $php_time; ?></div><div><?php echo $db_time; ?></div></td>";
+	html += "</tr>";
+	$("#tab-local table").prepend(html);
+	</script>
+]]></add>
+</operation>
+</file>
+
+<file name="system/startup.php">
+<operation error="log">
+<search position="before"><![CDATA[?>]]></search>
+<add><![CDATA[
+	$db = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+	$query = $db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE `key`='config_timezone'");
+	if ($query->num_rows) {
+	$timezone = $query->fetch_assoc();
+	if (!empty($timezone["value"])) date_default_timezone_set($timezone["value"]);
+	}
+]]></add>
+</operation>
+</file>
+
+<file name="system/library/db.php">
+<operation error="log">
+<search position="after"><![CDATA[function query]]></search>
+<add><![CDATA[
+	$now = new DateTime();
+	$mins = $now->getOffset() / 60;
+	$sgn = ($mins < 0 ? -1 : 1);
+	$mins = abs($mins);
+	$hrs = floor($mins / 60);
+	$mins -= $hrs * 60;
+	$offset = sprintf('%+d:%02d', $hrs*$sgn, $mins);
+	$this->driver->query("SET time_zone='$offset'");
+]]></add>
+</operation>
+</file>
+
+</modification>

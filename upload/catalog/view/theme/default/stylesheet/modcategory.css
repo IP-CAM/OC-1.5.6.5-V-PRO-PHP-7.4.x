@@ -1,0 +1,32 @@
+.list-group li{
+	position: relative;
+	list-style: none;
+}
+
+#categories-list .category-button{
+    position: absolute;
+    top: 0;
+    z-index: 2;
+    right: 0;
+    display: block;
+    padding: 0;
+    height: 38px;
+    width: 38px;
+    text-align: center;
+    cursor: pointer;
+    }
+
+#categories-list .category-button{
+        padding-top: 8px;
+    display: block;
+    font-size: 16px;}
+    
+#categories-list .list-group li ul{
+display: none;
+}
+.active a.category-button:before {
+  content: '-';
+}
+.category-button:before {
+  content: '+';
+}

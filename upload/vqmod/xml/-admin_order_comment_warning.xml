@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[Admin Order Comment Warning]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[Ernie - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="admin/view/template/sale/order_info.tpl">
+<operation error="log">
+<search position="add"><![CDATA[<?php echo $tab_order; ?>]]></search>
+<add><![CDATA[
+	<?php  if(isset($comment) && !empty($comment)){?>
+	<i><img src="view/image/warn_icon.png" height="16" width="16" title="Comments on Page!" alt="Comments on Page!"></i>
+	<?php }?>
+	<?php echo $tab_order; ?>
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace"><![CDATA[<td><?php echo $text_comment; ?></td>]]></search>
+<add><![CDATA[
+	<td style="font-weight:bold; background-color:rgba(255, 0, 0, 0.12);">Order Comments</td>
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace"><![CDATA[<td><?php echo $comment; ?></td>]]></search>
+<add><![CDATA[
+	<td style="font-weight:bold; background-color:rgba(255, 0, 0, 0.12);"><?php echo $comment; ?></td>
+]]></add>
+</operation>
+</file>
+
+</modification>

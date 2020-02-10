@@ -1,0 +1,73 @@
+<modification>
+<id><![CDATA[Large Number of Products Optimization]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[MaxD - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<!-- Skip unnecessary products count call -->
+<file name="catalog/controller/product/category.php">
+<operation error="log">
+<search position="before" index="1"><![CDATA[$product_total = $this->model_catalog_product->getTotalProducts($data);]]></search>
+<add><![CDATA[
+	if ($this->config->get('config_product_count'))
+]]></add>
+</operation>
+</file> 
+
+<!-- Optimize NOW() to have 1 hour step -->
+<file name="system/library/db.php">
+<operation error="log">
+<search position="before"><![CDATA[$this->driver->query($sql);]]></search>
+<add><![CDATA[
+	static $now;
+	if (!$now) $now = "'".date('Y-m-d H') . ":00:00'";
+	$sql = str_replace('NOW()', $now, $sql);
+]]></add>
+</operation>
+</file>
+
+<!-- Add database indexes -->
+<file name="admin/controller/common/home.php">
+<operation error="log">
+<search position="before"><![CDATA[$this->data['breadcrumbs'] = array();]]></search>
+<add><![CDATA[
+// MXS: Check and add database indexes
+	$index_list = "
+	category.parent_id, category.top, category.sort_order, category.status, category_description.language_id,
+	option_description.name, option_value.option_id, option_value_description.option_id, option_value_description.name,
+	product.model, product.sku, product.upc, product.location, product.manufacturer_id, product.sort_order, product.status, product.date_available,
+	product_description.language_id,
+	product_option.product_id, product_option.option_id, product_option_value.product_option_id, product_option_value.product_id, product_option_value.option_id, product_option_value.option_value_id,
+	product_attribute.attribute_id, product_attribute.language_id,
+	product_image.product_id,
+	product_tag.product_id, product_tag.tag, url_alias.query, url_alias.keyword, order.customer_id,
+	category_to_store.store_id, product_to_store.store_id,
+	product_reward.product_id, product_reward.customer_group_id,
+	product_to_category.category_id
+	";
+
+	$indexes = array();
+	foreach (explode(',', $index_list) as $index)
+	$indexes[] = trim($index);
+	$count = 0;
+
+	foreach ($indexes as $index) {
+	$index = explode('.',$index);
+	$table = $index[0];
+	$index = $index[1];
+// Check if table exists
+	if (!$this->db->query("SHOW TABLES LIKE '".DB_PREFIX.$table."'")->row) continue;
+// Check if index exists
+	if ($this->db->query("SHOW KEYS FROM `".DB_PREFIX.$table."` WHERE Key_name='$index'")->row) continue;
+	$this->db->query("ALTER TABLE `".DB_PREFIX.$table."` ADD INDEX `$index` (`$index`)");
+	$count++;
+	}
+	if ($count) $this->data['error_install'] = 'Large number of products optimization: <b>'.$count.' indexes added.</b>';
+// MXE
+]]></add>
+</operation>
+</file>
+
+</modification>

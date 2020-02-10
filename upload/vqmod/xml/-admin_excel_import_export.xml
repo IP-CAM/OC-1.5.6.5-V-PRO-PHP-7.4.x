@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[Export/Import Tool for OpenCart]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[mhccorp.com - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="admin/controller/common/header.php">
+<operation error="log">
+<search position="after"><![CDATA[$this->data['text_backup'] = $this->language->get('text_backup');]]></search>
+<add><![CDATA[
+$this->data['text_export_import'] = $this->language->get('text_export_import');
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="after"><![CDATA[$this->data['backup'] = $this->url->link('tool/backup', 'token=' . $this->session->data['token'], 'SSL');]]></search>
+<add><![CDATA[
+$this->data['export_import'] = $this->url->link('tool/export_import', 'token=' . $this->session->data['token'], 'SSL');
+]]></add>
+</operation>
+</file>
+
+<file name="admin/language/*/common/header.php">
+<operation error="log">
+<search position="after"><![CDATA[$_['text_backup']]]></search>
+<add><![CDATA[
+$_['text_export_import']	= 'Export / Import';
+]]></add>
+</operation>
+</file>
+
+<file name="admin/view/template/common/header.tpl">
+<operation error="log">
+<search position="after"><![CDATA[<li><a href="<?php echo $backup; ?>"><?php echo $text_backup; ?></a></li>]]></search>
+<add><![CDATA[
+<li><a href="<?php echo $export_import; ?>"><?php echo $text_export_import; ?></a></li>
+]]></add>
+</operation>
+</file>
+
+</modification>

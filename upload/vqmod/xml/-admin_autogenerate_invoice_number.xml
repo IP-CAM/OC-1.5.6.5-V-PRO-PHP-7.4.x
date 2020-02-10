@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[Autogenerate Invoice Number]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[thbr02 - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="catalog/model/checkout/order.php">
+<operation error="log">
+<search position="after"><![CDATA[if ($order_info && !$order_info['order_status_id']) {]]></search>
+<add><![CDATA[
+	$query = $this->db->query("SELECT MAX(invoice_no) AS invoice_no FROM `" . DB_PREFIX . "order` WHERE invoice_prefix = '" . $this->db->escape($order_info['invoice_prefix']) . "'");
+	if ($query->row['invoice_no']) {
+	$invoice_no = (int)$query->row['invoice_no'] + 1;
+	} else {
+	$invoice_no = 1;
+	}
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace" index="1"><![CDATA[$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");]]></search>
+<add><![CDATA[
+	$this->db->query("UPDATE `" . DB_PREFIX . "order` SET invoice_no = '" . (int)$invoice_no . "', invoice_prefix = '" . $this->db->escape($order_info['invoice_prefix']) . "', order_status_id = '" . (int)$order_status_id . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="after"><![CDATA[$template->data['text_order_detail'] = $language->get('text_new_order_detail');]]></search>
+<add><![CDATA[
+	$template->data['text_invoice_no'] = $language->get('text_new_invoice_no');
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="before"><![CDATA[$template->data['order_id'] = $order_id;]]></search>
+<add><![CDATA[
+	$template->data['invoice_no'] = $invoice_no;
+]]></add>
+</operation>
+</file>
+
+</modification>

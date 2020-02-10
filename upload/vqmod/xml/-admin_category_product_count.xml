@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[Category status product count]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[Media6 technologies - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="admin/model/catalog/category.php">
+<operation error="log">
+<search position="replace"><![CDATA[$sql = "SELECT cp.category_id AS category_id, GROUP_CONCAT(cd1.name ORDER BY cp.level SEPARATOR ' &gt; ') AS name, c.parent_id, c.sort_order FROM " . DB_PREFIX . "category_path cp LEFT JOIN " . DB_PREFIX . "category c ON (cp.path_id = c.category_id) LEFT JOIN " . DB_PREFIX . "category_description cd1 ON (c.category_id = cd1.category_id) LEFT JOIN " . DB_PREFIX . "category_description cd2 ON (cp.category_id = cd2.category_id) WHERE cd1.language_id = '" . (int)$this->config->get('config_language_id') . "' AND cd2.language_id = '" . (int)$this->config->get('config_language_id') . "'";]]></search>
+<add><![CDATA[
+	$sql = "SELECT cp.category_id AS category_id, GROUP_CONCAT(cd1.name ORDER BY cp.level SEPARATOR ' &gt; ') AS name, c.parent_id, c.sort_order, c.status FROM " . DB_PREFIX . "category_path cp LEFT JOIN " . DB_PREFIX . "category c ON (cp.path_id = c.category_id) LEFT JOIN " . DB_PREFIX . "category_description cd1 ON (c.category_id = cd1.category_id) LEFT JOIN " . DB_PREFIX . "category_description cd2 ON (cp.category_id = cd2.category_id) WHERE cd1.language_id = '" . (int)$this->config->get('config_language_id') . "' AND cd2.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="after"><![CDATA[class ModelCatalogCategory extends Model {]]></search>
+<add><![CDATA[
+	public function getTotalProductsByCategoryId($category_id) {
+	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "product_to_category WHERE category_id = '" . (int)$category_id . "'");
+	return $query->row['total'];
+	}
+]]></add>
+</operation>
+</file>
+
+<file name="admin/language/english/catalog/category.php">
+<operation error="log">
+<search position="after"><![CDATA[// Column]]></search>
+<add><![CDATA[
+	$_['column_no_of_products']  = 'No. of Products';
+]]></add>
+</operation>
+</file>
+
+<file name="admin/controller/catalog/category.php">
+<operation error="log">
+<search position="after"><![CDATA[$this->data['column_name'] = $this->language->get('column_name');]]></search>
+<add><![CDATA[
+	$this->data['column_no_of_products'] = $this->language->get('column_no_of_products');
+]]></add>
+</operation>
+
+<operation error="log">>
+<search position="before"><![CDATA[$this->data['categories'][] = array(]]></search>
+<add><![CDATA[
+	$no_of_products = $this->model_catalog_category->getTotalProductsByCategoryId($result['category_id']);
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="after"><![CDATA['sort_order'  => $result['sort_order'],]]></search>
+<add><![CDATA[
+	'no_of_products'  => $no_of_products,
+]]></add>
+</operation>
+</file>
+
+<file name="admin/view/template/catalog/category_list.tpl">
+<operation error="log">
+<search position="before"><![CDATA[<td style="text-align:right;"><?php echo $column_sort_order; ?></td>]]></search>
+<add><![CDATA[
+	<td class="center"><?php echo $column_no_of_products; ?></td>
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="before"><![CDATA[<td style="text-align:right;"><?php echo $category['sort_order']; ?></td>]]></search>
+<add><![CDATA[
+	<td class="center"><?php echo $category['no_of_products']; ?></td>
+]]></add>
+</operation>
+</file>
+
+</modification>

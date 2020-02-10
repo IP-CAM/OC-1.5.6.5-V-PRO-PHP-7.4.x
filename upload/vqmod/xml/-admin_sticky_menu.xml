@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[Sticky Admin Menu]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[jgsw - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="admin/view/template/common/footer.tpl">
+<operation error="log">
+<search position="top" offset="2"><![CDATA[]]></search>
+<add><![CDATA[
+<script type="text/javascript">
+	$(document).ready(function() {
+	//Calculate the height of <header>
+	//Use outerHeight() instead of height() if have padding
+	var aboveHeight = $('#header>.div1').outerHeight();
+	// when scroll
+	$(window).scroll(function(){
+	//if scrolled down more than the header's height
+	if ($(window).scrollTop() > aboveHeight){
+	// if yes, add "fixed" class to the <nav>
+	// add padding top to the #content (value is same as the height of the nav)
+	$('#menu').addClass('fixed-menu').css('top','0');
+	$('#content').css('padding-top','44px');
+	} else {
+	// when scroll up or less than aboveHeight, remove the "fixed" class, and the padding-top
+	$('#menu').removeClass('fixed-menu');
+	$('#content').css('padding-top','10px');
+	}
+	});
+	});
+</script>
+<style>
+	.fixed-menu {
+	position:fixed!important;
+	left:0;
+	right:0;
+	}
+</style>
+]]></add>
+</operation>
+</file>
+
+</modification>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[Remove Admin FTP Section]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[David Lopes - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="admin/view/template/setting/setting.tpl">
+<operation error="log">
+<search position="replace"><![CDATA[ href="#tab-ftp"><?php echo $tab_ftp; ?></a><a]]></search>
+<add><![CDATA[]]></add>
+</operation>
+
+<operation error="log">
+<search position="before"><![CDATA[<div id="tab-ftp">]]></search>
+<add><![CDATA[
+<!--  
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="before"><![CDATA[<div id="tab-mail">]]></search>
+<add><![CDATA[
+  -->
+]]></add>
+</operation>
+</file>
+
+<file name="admin/controller/setting/setting.php">
+<operation error="log">
+<search position="before"><![CDATA[ if ($this->request->post['config_ftp_status']) {]]></search>
+<add><![CDATA[
+/* 
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="before"><![CDATA[ if (!$this->request->post['config_error_filename']) {]]></search>
+<add><![CDATA[
+*/ 
+]]></add>
+</operation>
+</file>
+
+</modification>

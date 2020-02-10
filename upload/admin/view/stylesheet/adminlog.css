@@ -1,0 +1,9 @@
+.list .denied, .list .denied td,
+.list .clear, .list .clear td {	background-color:#ffcccc !important;
+	border-color:#ffcccc;}
+.list .login, .list .login td{
+	background-color:#c5e9c2;
+}
+.list .logout, .list .logout td{	background-color:#dddddd;}
+.list .access, .list .access td{	background-color:#b2dcff;}
+.list .modify, .list .modify td{	background-color:#ffe699;}

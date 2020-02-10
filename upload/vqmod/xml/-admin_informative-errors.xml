@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[Display informative error Messages]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[MaxD - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="system/library/request.php">
+<operation error="log">
+<search position="after"><![CDATA[function __construct() {]]></search>
+<add><![CDATA[
+	function openshop_error_handler($errno, $errstr, $errfile, $errline) {
+	if (strpos($errstr, "deprecated and will be removed in the future")) return;
+	global $log, $config;
+	$bk = 'd8d8d8';
+	$cl = 'black';
+	switch ($errno) {
+	case E_NOTICE:
+	case E_USER_NOTICE:
+	$error = 'Notice';
+	$bk = '#cddcc6';
+	$cl = 'green';
+	break;
+	case E_WARNING:
+	case E_USER_WARNING:
+	$error = 'Warning';
+	$bk = '#ffeab2';
+	$cl = 'orange';
+	break;
+	case E_ERROR:
+	case E_USER_ERROR:
+	$error = 'Fatal Error';
+	$bk = '#ffd7d7';
+	$cl = 'red';
+	break;
+	default:
+	$error = 'Unknown';
+	break;
+	}
+	if (defined('HTTP_ADMIN')) $home = HTTP_ADMIN; else {
+	$home = HTTP_SERVER;
+	if (!defined('HTTP_CATALOG')) $home .= 'admin/';
+	}
+	$file = str_replace(substr(DIR_SYSTEM,0,-7),'',$errfile);
+	$ext_url = $home."ext/#". $file.':'.$errline;
+	if (strpos($ext_url,'(')) $ext_url = substr($ext_url,0,strpos($ext_url,'('));
+	$tlink = false;
+	if (strpos($errfile, 'vqcache/vq')) {
+	$tlink = str_replace('_','/', substr($errfile,strpos($errfile,'vq2-')+4));
+	if (strpos($tlink,'(')) $tlink = substr($tlink,0,strpos($tlink,'('));
+	global $url, $session;
+	$tlink = $home . "index.php?route=tool/tweaks&target=$tlink";
+	if (!empty($session->data['token'])) $tlink .= "&token=" . $session->data['token'];
+	}
+	$google = $error.": ".$errstr. ' in "' . $file . '" on line ' . $errline;
+	$google = "http://google.com/search?q=". urlencode($google);
+	if ($config->get('config_error_display')) {
+	echo "<div style='text-align: left; color: black; font-size: 11px; background: $bk; padding: 5px; margin: 5px auto; max-width: 980px; border: 1px solid $cl;'>";
+	echo "<b style='color: $cl'>" . $error . ':</b> ' . $errstr . " in <a style='font-size: 11px'>" . $file . '</a> on line <b>' . $errline . '</b>';
+	echo '</div>';
+	}
+	if ($config->get('config_error_log')) {
+	$log->write('PHP <b><font color="'.$cl.'">' . $error . ':</font></b>  ' . $errstr . " in " . $file . '</a> on line <b>' . $errline . '</b>'.$tlink);
+	}
+	return true;
+	}
+	function openshop_shutdown() {
+	global $locker;
+	$error = error_get_last();
+	if($error !== NULL)
+	if (($error['type']!=2) and ($error['type']!=8) and ($error['line'])) {
+	chdir(dirname(__FILE__));
+	openshop_error_handler(E_ERROR, $error['message'], $error['file'], $error['line']);
+	}
+	}
+	if (!defined('NO_INFORMATIVE_ERRORS')) {
+	register_shutdown_function('openshop_shutdown');
+	set_error_handler('openshop_error_handler');
+	}
+]]></add>
+</operation>
+</file>
+
+<file name="admin/view/template/tool/error_log.tpl">
+<operation error="log">
+<search position="replace" offset="2"><![CDATA[<div class="content">]]></search>
+<add><![CDATA[
+	<div class="content">
+	<font color="grey"><?php echo str_replace(array("\n"," - "),array("<div style='width:100%; border-top: 1px dotted grey; margin-top:5px; padding-top: 5px;'></div><font color='grey'>","</font> "),$log); ?>
+	</div>
+]]></add>
+</operation>
+</file>
+
+</modification>

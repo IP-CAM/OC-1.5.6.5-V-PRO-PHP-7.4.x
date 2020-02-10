@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[adds Hours+Minutes to Admin Order Listing]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[Webbix - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="admin/controller/common/home.php">
+<operation error="log">
+<search position="after"><![CDATA['date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),]]></search>
+<add trim="true"><![CDATA[
+	'date_added_time' => date($this->language->get('date_format_short_time'), strtotime($result['date_added'])),
+]]></add>
+</operation>
+</file>
+
+<file name="admin/language/english/english.php">
+<operation error="log">
+<search position="after"><![CDATA[$_['date_format_short']]]></search>
+<add trim="true"><![CDATA[
+	$_['date_format_short_time']	= 'j.M.Y - G:i';
+]]></add>
+</operation>
+</file>
+
+<file name="admin/view/template/common/home.tpl">
+<operation error="log">
+<search position="replace"><![CDATA[<?php echo $order['date_added']; ?>]]></search>
+<add trim="true"><![CDATA[
+	<?php echo $order['date_added_time']; ?> Uhr
+]]></add>
+</operation>
+</file>
+
+</modification>

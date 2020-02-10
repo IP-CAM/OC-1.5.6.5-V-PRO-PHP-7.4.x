@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[View Module Positions]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[OpencartModules - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="admin/language/english/extension/module.php">
+<operation error="log">
+<search position="before"><![CDATA[?>]]></search>
+<add><![CDATA[
+$_['column_sort_orders']= 'Frontend sort order';
+$_['column_sort_order']= 'Admin Sort order';
+$_['column_positions']= 'Positions';
+$_['column_layouts']= 'Layouts';
+]]></add>
+</operation>
+</file>
+
+<file name="admin/controller/extension/module.php">
+<operation error="log">
+<search position="after"><![CDATA[$this->load->model('setting/extension');]]></search>
+<add><![CDATA[
+	if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
+	$this->model_setting_extension->editSetting($this->request->post);
+	}
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="before"><![CDATA[$this->data['heading_title'] = $this->language->get('heading_title');]]></search>
+<add><![CDATA[
+	$this->data['action'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="after"><![CDATA[$this->data['column_action'] = $this->language->get('column_action');]]></search>
+<add><![CDATA[
+	$this->data['column_sort_orders'] = $this->language->get('column_sort_orders');
+	$this->data['column_sort_order'] = $this->language->get('column_sort_order');
+	$this->data['column_positions'] = $this->language->get('column_positions');
+	$this->data['column_layouts'] = $this->language->get('column_layouts');
+	$this->data['button_save'] = $this->language->get('button_save');
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="before"><![CDATA[public function index()]]></search>
+<add><![CDATA[
+	private static function cmpdata($a, $b) {
+	if ($a['sort_order']==$b['sort_order']) {
+	return (strtolower($a['name'])<strtolower($b['name'])) ? -1 : 1;
+	}
+	return ((int)$a['sort_order']<(int)$b['sort_order']) ? -1 : 1;
+	}
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="before"><![CDATA[$this->template = 'extension/module.tpl';]]></search>
+<add><![CDATA[
+	usort($this->data['extensions'], array('ControllerExtensionModule','cmpdata'));
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="after"><![CDATA[$this->load->model('setting/extension');]]></search>
+<add><![CDATA[
+	$this->model_setting_extension->CreateColumns();
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="after"><![CDATA[$extension = basename($file, '.php');]]></search>
+<add><![CDATA[
+	$layouts=array();
+	$positions=array();
+	$sort_orders=array();
+	$modules = $this->config->get($extension . '_module');
+	$extension_data=$this->model_setting_extension->getExtensionByCode($extension,'module');
+	if ($modules) {
+	foreach ($modules as $module) {
+	$layouts[]=$this->model_setting_extension->getLayoutName($module['layout_id']);
+	$positions[]=$module['position'];
+		$sort_orders[]=$module['sort_order'];
+	}
+	}
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace"><![CDATA['action' => $action]]></search>
+<add><![CDATA[
+	'action' => $action,
+	'layouts'=>implode(', ',$layouts),
+	'positions'=>implode(', ',$positions),
+	'sort_orders'=>implode(', ',$sort_orders),
+	'sort_order'=>$extension_data['sort_order'],
+	'code' => $extension,
+	'type' => $extension_data['type'],
+]]></add>
+</operation>
+</file>
+
+<file name="admin/model/setting/extension.php">
+<operation error="log">
+<search position="after"><![CDATA[class ModelSettingExtension extends Model {]]></search>
+<add><![CDATA[
+	public function editSetting($data) {
+	$modules=$data['modules'];
+	foreach ($modules as $code=> $module) {
+	if ($module['type']=='module') {
+	$this->db->query("UPDATE " . DB_PREFIX . "extension SET `sort_order`='".$module['sort_order']."'  WHERE type='module' AND code = '" . $this->db->escape($code) . "'");
+	}
+	}
+	}
+	public function getLayoutName($layout_id) {
+	$query = $this->db->query("SELECT `name` FROM " . DB_PREFIX . "layout WHERE layout_id = '" . (int)$layout_id . "'");
+	return $query->row['name'];
+	}
+	public function getExtensionByCode($code,$type) {
+	$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "extension WHERE type='".$this->db->escape($type)."' AND code = '" . $this->db->escape($code) . "'");
+	if ($query->num_rows)
+	return $query->row;
+	else
+	return array('description'=>'','sort_order'=>'999999', 'type'=>'');
+	}
+	public function CreateColumns() {
+	$results = $this->db->query("SHOW COLUMNS FROM `" . DB_PREFIX . "extension` LIKE 'sort_order'");
+	if ($results->num_rows < 1) {
+	$this->db->query("ALTER TABLE `" . DB_PREFIX . "extension` ADD COLUMN sort_order int(11) NOT NULL DEFAULT 0");
+	}
+	$results = $this->db->query("SHOW COLUMNS FROM `" . DB_PREFIX . "extension` LIKE 'description'");
+	if ($results->num_rows < 1) {
+	$this->db->query("ALTER TABLE `" . DB_PREFIX . "extension` ADD COLUMN description text NOT NULL DEFAULT ''");
+	}
+	return;
+	}
+]]></add>
+</operation>
+</file>
+
+<file name="admin/view/template/extension/module.tpl">
+<operation error="log">
+<search position="after"><![CDATA[<h1><img src="view/image/module.png" alt="" /> <?php echo $heading_title; ?></h1>]]></search>
+<add><![CDATA[
+<!--OpencartModules-->
+<div class="buttons">
+<a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a>
+</div>
+]]>
+</add>
+</operation>
+
+<operation error="log">
+<search position="before"><![CDATA[<table class="list">]]></search>
+<add><![CDATA[
+	<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
+]]>
+</add>
+</operation>
+
+<operation error="log">
+<search position="after"><![CDATA[</table>]]></search>
+<add ><![CDATA[
+	</form>
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="after"><![CDATA[<td class="left"><?php echo $column_name; ?></td>]]></search>
+<add ><![CDATA[
+	<td class="center"><?php echo $column_layouts; ?></td>
+	<td class="center"><?php echo $column_positions; ?></td>
+	<td class="center"><?php echo $column_sort_orders; ?></td>
+	<td class="center"><?php echo $column_sort_order; ?></td>
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="after"><![CDATA[<?php echo $extension['name']; ?></td>]]></search>
+<add ><![CDATA[
+	<td class="center"><?php echo $extension['layouts']; ?></td>
+	<td class="center"><?php echo $extension['positions']; ?></td>
+	<td class="center"><?php echo $extension['sort_orders']; ?></td>
+	<input type="hidden" name="modules[<?php echo $extension['code']; ?>][type]" value="<?php echo $extension['type']; ?>" />
+	<?php if ($extension['type']=='module') { ?>
+	<td class="center"><input type="text" size="1" name="modules[<?php echo $extension['code']; ?>][sort_order]" value="<?php echo ($extension['sort_order']=='999999'?'':$extension['sort_order']); ?>" /></td>
+	<?php } else { ?>
+	<td></td>
+	<?php } ?>
+]]></add>
+</operation>
+</file>
+
+</modification>

@@ -1,0 +1,3 @@
+table.list tr.even td {background: #ECF6FC}
+table.list tr.over td {background: #BCD4EC}
+table.list thead tr.over td {background-color: #EFEFEF; }

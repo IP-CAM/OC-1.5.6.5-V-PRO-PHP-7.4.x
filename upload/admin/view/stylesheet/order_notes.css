@@ -1,0 +1,24 @@
+.fraud-orders{
+	display: none;
+}
+
+.fraud-orders .no-similar{
+	padding: 10px;
+  	text-align: center;
+  	font-size: 12px;
+}
+
+#orders .icons{
+	/*display: none;*/
+	float:left;
+}
+
+#orders .icons span{
+	color: #f00;
+	cursor:pointer;
+	padding: 2px;
+}
+
+.notes-box-hidden{
+	display: none;
+}

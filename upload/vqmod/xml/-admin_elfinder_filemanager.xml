@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[Image File Manager]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[elFinder - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+
+<file name="admin/controller/common/filemanager.php">
+<operation error="log">
+<search position="before"><![CDATA[$this->template = 'common/filemanager.tpl';]]></search>
+<add><![CDATA[
+	if (isset($this->request->get['multiadd'])) {
+	$this->data['multiadd'] = $this->request->get['multiadd'];
+	} else {
+	$this->data['multiadd'] = false;
+	}
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="before"><![CDATA[public function upload() {]]></search>
+<add><![CDATA[
+	public function connector(){
+	include_once 'elFinder/php/elFinderConnector.class.php';
+	include_once 'elFinder/php/elFinder.class.php';
+	include_once 'elFinder/php/elFinderVolumeDriver.class.php';
+	include_once 'elFinder/php/elFinderVolumeLocalFileSystem.class.php';
+	if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+	$catalog_protocol = HTTPS_CATALOG;
+	} else {
+	$catalog_protocol = HTTP_CATALOG;
+	}
+	$opts = array(
+	'roots' => array(
+	array(
+	'driver'=> 'LocalFileSystem',	// driver for accessing file system (REQUIRED)
+	'path'  => DIR_IMAGE . 'data/', // path to files (REQUIRED)
+	'URL'	=> $catalog_protocol . 'image/data/', // URL to files (REQUIRED)
+	'defaults' => array('read' => true, 'write' => false),
+	'uploadMaxSize'=>'3M',
+	'uploadAllow' => array(
+	'image/jpeg',
+	'image/pjpeg',
+	'image/png',
+	'image/x-png',
+	'image/gif',
+	'application/x-shockwave-flash'
+	),
+	'uploadOverwrite'=>false,
+	'uploadOrder'=>array('allow','deny'),
+	'attributes' => array(
+	array(
+	'pattern' => '~/\.~',
+	// 'pattern' => '/^\/\./',
+	'read' => false,
+	'write' => false,
+	'hidden' => true,
+	'locked' => false
+	)
+	)
+	)
+	)
+	);
+	$connector = new elFinderConnector(new elFinder($opts));
+	$connector->run();
+	}
+]]></add>
+</operation>
+</file>
+
+<file name="admin/view/template/catalog/product_form.tpl">
+<operation error="log">
+<search position="replace"><![CDATA[<a onclick="addImage();" class="button"><?php echo $button_add_image; ?></a>]]></search>
+<add><![CDATA[
+	<a onclick="image_upload('image<?php echo $image_row; ?>', 'thumb<?php echo $image_row; ?>','addImage');" class="button"><?php echo $button_add_image; ?></a>
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace"><![CDATA[function image_upload(field, thumb) {]]></search>
+<add><![CDATA[
+	function image_upload(field, thumb,multiadd) {
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace"><![CDATA[$('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');]]></search>
+<add><![CDATA[
+	$('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + (typeof  multiadd !="undefined"?'&multiadd='+multiadd:'')+'" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace" offset="9"><![CDATA[close: function (event, ui) {]]></search>
+<add><![CDATA[
+	close: function (event, ui) {
+	if(typeof multiadd !="undefined")
+	{
+	$('input[id^=image]').each(function(index){
+	var img = $(this).prev('img');
+	if ($(this).attr('value') && img.attr('src','<?php echo $no_image?>')) {
+	$.ajax({
+	url: 'index.php?route=common/filemanager/image&token=<?php echo $token; ?>&image=' + encodeURIComponent($(this).attr('value')),
+	dataType: 'text',
+	success: function(text) {
+	img.attr('src',text);
+	}
+	});
+	}
+	});
+	} else {
+	if ($('#' + field).attr('value')) {
+	$.ajax({
+	url: 'index.php?route=common/filemanager/image&token=<?php echo $token; ?>&image=' + encodeURIComponent($('#' + field).attr('value')),
+	dataType: 'text',
+	success: function(text) {
+	$('#' + thumb).replaceWith('<img src="' + text + '" alt="" id="' + thumb + '" />');
+	}
+	});
+	}
+	}
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace"><![CDATA[width: 800,]]></search>
+<add><![CDATA[
+	width: 960,
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace"><![CDATA[height: 400,]]></search>
+<add><![CDATA[
+	height: 600,
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace" offset="12"><![CDATA[function addImage() {]]></search>
+<add><![CDATA[
+	function addImage(files) {
+	html ='';
+	$.each(files,function(index,element){
+	html += '<tbody id="image-row' + image_row + '">';
+	html += '  <tr>';
+	html += '<td class="left"><div class="image"><img src="<?php echo $no_image;?>" alt="" id="thumb' + image_row + '" /><input type="hidden" name="product_image[' + image_row + '][image]" value="'+element.path+'" id="image' + image_row + '" /><br /><a onclick="image_upload(\'image' + image_row + '\', \'thumb' + image_row + '\');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$(\'#thumb' + image_row + '\').attr(\'src\', \'<?php echo $no_image; ?>\'); $(\'#image' + image_row + '\').attr(\'value\', \'\');"><?php echo $text_clear; ?></a></div></td>';
+	html += '<td class="right"><input type="text" name="product_image[' + image_row + '][sort_order]" value="" size="2" /></td>';
+	html += '<td class="left"><a onclick="$(\'#image-row' + image_row  + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
+	html += '  </tr>';
+	html += '</tbody>';
+	image_row++;
+	});
+	$('#images tfoot').before(html);
+	}
+]]></add>
+</operation>
+</file>
+
+<file name="admin/view/template/common/filemanager.tpl">
+<operation error="log">
+<search position="replace" offset="654"><![CDATA[<!DOCTYPE html>]]></search>
+<add><![CDATA[
+	<!DOCTYPE html>
+	<html>
+	<head>
+	<meta charset="utf-8">
+	<title>OpenCart Image File Manager</title>
+	<base href="<?php echo $base; ?>" />
+	<link rel="stylesheet" type="text/css" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/smoothness/jquery-ui.css">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="elFinder/css/elfinder.min.css">
+	<link rel="stylesheet" type="text/css" href="elFinder/css/theme.css">
+	<script src="elFinder/js/elfinder.min.js"></script>
+	<script type="text/javascript" charset="utf-8">
+	$(document).ready(function() {
+	$('#elfinder').elfinder({
+	url : 'index.php?route=common/filemanager/connector&token=<?php echo $token; ?>',  // connector URL (REQUIRED)
+	'height':540,
+	'resizable' : false,
+	'dragUploadAllow':true,
+	<?php if ($multiadd) { ?>
+	commandsOptions : {
+	getfile : {
+	multiple : true
+	}
+	},
+	<?php } ?>
+	getFileCallback : function(files, fm) {
+	<?php if ($fckeditor) { ?>
+	window.opener.CKEDITOR.tools.callFunction(<?php echo $fckeditor; ?>, files.url);
+	self.close();
+	<?php } elseif($multiadd) { ?>
+	var fun = '<?php echo $multiadd; ?>';
+	if(fun =="addImage")
+	{
+	parent.addImage(files);
+	}
+	parent.$('#dialog').dialog('close');
+	<?php } else { ?>
+	parent.$('#<?php echo $field; ?>').attr('value', files.path);
+	parent.$('#dialog').dialog('close');
+	<?php } ?>
+	return false;
+	},
+	uiOptions : {
+	toolbar : [
+	['back', 'forward'],
+	['mkdir', 'upload'],
+	['open', 'download', 'getfile'],
+	['info'],
+	['quicklook'],
+	['copy', 'cut', 'paste'],
+	['rm'],
+	['duplicate', 'rename', 'edit', 'resize'],
+	['extract', 'archive'],
+	['search'],
+	['view'],
+	['help']
+	]
+	},
+	contextmenu : {
+	cwd: ['reload', 'back', '|', 'upload', 'mkdir', 'paste', '|', 'info']
+	}
+	});
+	});
+	</script>
+	</head>
+	<body>
+	<div id="elfinder"></div>
+	</body>
+	</html>
+]]></add>
+</operation>
+</file>
+
+<file name="admin/view/template/design/banner_form.tpl">
+<operation error="log">
+<search position="replace"><![CDATA[function image_upload(field, thumb) {]]></search>
+<add><![CDATA[
+	function image_upload(field, thumb,multiadd) {
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace"><![CDATA[$('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');]]></search>
+<add><![CDATA[
+	$('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + (typeof  multiadd !="undefined"?'&multiadd='+multiadd:'')+'" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace" offset="9"><![CDATA[close: function (event, ui) {]]></search>
+<add><![CDATA[
+	close: function (event, ui) {
+	if(typeof multiadd !="undefined")
+	{
+	$('input[id^=image]').each(function(index){
+	var img = $(this).prev('img');
+	if ($(this).attr('value') && img.attr('src','<?php echo $no_image?>')) {
+	$.ajax({
+	url: 'index.php?route=common/filemanager/image&token=<?php echo $token; ?>&image=' + encodeURIComponent($(this).attr('value')),
+	dataType: 'text',
+	success: function(text) {
+	img.attr('src',text);
+	}
+	});
+	}
+	});
+	} else {
+	if ($('#' + field).attr('value')) {
+	$.ajax({
+	url: 'index.php?route=common/filemanager/image&token=<?php echo $token; ?>&image=' + encodeURIComponent($('#' + field).attr('value')),
+	dataType: 'text',
+	success: function(text) {
+	$('#' + thumb).replaceWith('<img src="' + text + '" alt="" id="' + thumb + '" />');
+	}
+	});
+	}
+	}
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace"><![CDATA[width: 700,]]></search>
+<add><![CDATA[
+	width: 960,
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace"><![CDATA[height: 400,]]></search>
+<add><![CDATA[
+	height: 600,
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace"><![CDATA[<td class="left"><a onclick="addImage();" class="button"><?php echo $button_add_banner; ?></a></td>]]></search>
+<add><![CDATA[
+	<td class="left"><a onclick="image_upload('image<?php echo $image_row; ?>', 'thumb<?php echo $image_row; ?>','addImage');" class="button"><?php echo $button_add_banner; ?></a></td>
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace" offset="17x"><![CDATA[function addImage() {]]></search>
+<add><![CDATA[
+	function addImage(files) {
+	html ='';
+	$.each(files,function(index,element){
+	html  += '<tbody id="image-row' + image_row + '">';
+	html += '<tr>';
+	html += '<td class="left">';
+	<?php foreach ($languages as $language) { ?>
+	html += '<input type="text" name="banner_image[' + image_row + '][banner_image_description][<?php echo $language['language_id']; ?>][title]" value="" /> <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
+	<?php } ?>
+	html += '</td>';
+	html += '<td class="left"><input type="text" name="banner_image[' + image_row + '][link]" value="" /></td>';
+	html += '<td class="left"><div class="image"><img src="<?php echo $no_image; ?>" alt="" id="thumb' + image_row + '" /><input type="hidden" name="banner_image[' + image_row + '][image]" value="'+element.path+'" id="image' + image_row + '" /><br /><a onclick="image_upload(\'image' + image_row + '\', \'thumb' + image_row + '\');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$(\'#thumb' + image_row + '\').attr(\'src\', \'<?php echo $no_image; ?>\'); $(\'#image' + image_row + '\').attr(\'value\', \'\');"><?php echo $text_clear; ?></a></div></td>';
+	html += '<td class="left"><a onclick="$(\'#image-row' + image_row  + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
+	html += '</tr>';
+	html += '</tbody>';
+	image_row++;
+	});
+	$('#images tfoot').before(html);
+	}
+]]></add>
+</operation>
+</file>
+
+<file name="admin/view/template/catalog/manufacturer_form.tpl,admin/view/template/catalog/category_form.tpl,admin/view/template/sale/voucher_theme_form.tpl">
+<operation error="log">
+<search position="replace"><![CDATA[function image_upload(field, thumb) {]]></search>
+<add><![CDATA[
+	function image_upload(field, thumb,multiadd) {
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace"><![CDATA[$('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');]]></search>
+<add><![CDATA[
+	$('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + (typeof  multiadd !="undefined"?'&multiadd=1':'')+'" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace" offset="9"><![CDATA[close: function (event, ui) {]]></search>
+<add><![CDATA[
+	close: function (event, ui) {
+	if(typeof multiadd !="undefined")
+	{
+	$('input[id^=image]').each(function(index){
+	var img = $(this).prev('img');
+	if ($(this).attr('value') && img.attr('src','<?php echo $no_image?>')) {
+	$.ajax({
+	url: 'index.php?route=common/filemanager/image&token=<?php echo $token; ?>&image=' + encodeURIComponent($(this).attr('value')),
+	dataType: 'text',
+	success: function(text) {
+	img.attr('src',text);
+	}
+	});
+	}
+	});
+	} else {
+	if ($('#' + field).attr('value')) {
+	$.ajax({
+	url: 'index.php?route=common/filemanager/image&token=<?php echo $token; ?>&image=' + encodeURIComponent($('#' + field).attr('value')),
+	dataType: 'text',
+	success: function(text) {
+	$('#' + thumb).replaceWith('<img src="' + text + '" alt="" id="' + thumb + '" />');
+	}
+	});
+	}
+	}
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace"><![CDATA[width: 800,]]></search>
+<add><![CDATA[
+	width: 960,
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace"><![CDATA[height: 400,]]></search>
+<add><![CDATA[
+	height: 600,
+]]></add>
+</operation>
+</file>
+
+</modification>

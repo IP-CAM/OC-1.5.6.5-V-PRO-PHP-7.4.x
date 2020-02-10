@@ -1,0 +1,10 @@
+@CHARSET "UTF-8";
+.list tbody .list-even {
+	background:#F8F8F8;
+}
+.list tbody .list-selected {
+	background:#CBE4EF;
+}
+.list tbody .list-hover {
+	background:#E7EFEF;
+}

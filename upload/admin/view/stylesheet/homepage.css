@@ -1,0 +1,94 @@
+/* Homepage */
+.homepage {
+	padding: 10px;
+	border-left: 1px solid #CCCCCC;
+	border-right: 1px solid #CCCCCC;
+	border-bottom: 1px solid #CCCCCC;
+}
+.homepage .heading {
+	margin-top: 0px;
+	margin-bottom: 15px;
+	color: #003A88;
+	font-weight: bold;
+	font-size: 18px;
+	border-bottom: 1px solid #003A88;
+}
+.homepage .description {
+	margin-top: 0px;
+	margin-bottom: 15px;
+}
+.homepage table {
+	border-collapse: collapse;
+	width: 100%;
+	border-top: 1px solid #DDDDDD;
+	border-left: 1px solid #DDDDDD;
+	margin-bottom: 10px;
+}
+.homepage thead th td {
+	font-size: 8px;
+}
+.homepage th {
+	border-right: 1px solid #DDDDDD;
+	border-bottom: 1px solid #DDDDDD;
+	background-color: #EFEFEF;
+	padding: 0px 5px;
+	color: #222222;
+	font-weight: bold;
+}
+.homepage td {
+	border-right: 1px solid #DDDDDD;
+	border-bottom: 1px solid #DDDDDD;
+	padding: 0px 5px;
+	color: #222222;
+}
+.homepage thead td {
+	background-color: #EFEFEF;
+	padding: 0px 5px;
+	color: #222222;
+	font-weight: bold;
+	vertical-align: top;
+}
+.list thead td {
+	text-decoration: none;
+	color: #222222;
+	font-weight: bold;
+}
+.homepage thead td a {
+	text-decoration: underline;
+	color: #003366;
+	font-weight: normal;
+}
+.homepage thead td a:hover {
+	text-decoration: none;
+}
+.homepage tbody a {
+	text-decoration: underline;
+}
+.homepage tbody a.button {
+	text-decoration: none;
+}
+.homepage tbody td {
+	vertical-align: middle;
+	padding: 0px 5px;
+}
+.homepage tbody tr:odd {
+	background: #FFFFFF;
+}
+.homepage tbody tr:even {
+	background: #E4EEF7;
+}
+.homepage .left {
+	vertical-align: middle;
+	text-align: left;
+	padding: 7px;
+}
+.homepage .right {
+	vertical-align: middle;
+	text-align: right;
+	padding: 7px;
+}
+.homepage .center {
+	vertical-align: middle;
+	text-align: center;
+	padding: 7px;
+}

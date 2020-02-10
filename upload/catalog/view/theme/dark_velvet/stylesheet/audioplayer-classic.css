@@ -1,0 +1,219 @@
+.audiojs audio {
+    position: absolute;
+    left: -1px;
+}
+
+.audiojs {
+    width: 390px;
+    height: 26px;
+    background: #555555;
+    overflow: hidden;
+    padding: 4px 0;
+    margin-bottom: 4px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -khtml-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
+    border-bottom: 1px solid #8a8a8a;
+}
+
+.audiojs .ap-play-pause {
+    width: 25px;
+    height: 24px;
+    padding: 0 6px 0 10px;
+    margin: 0px;
+    float: left;
+    overflow: hidden;
+}
+
+.audiojs p {
+    display: none;
+    width: 25px;
+    height: 20px;
+    margin: 0px;
+    cursor: pointer;
+}
+
+.audiojs .ap-play {
+    display: block;
+}
+
+.audiojs .ap-scrubber {
+    position: relative;
+    float: left;
+    width: 250px;
+    background: #222222;
+    height: 15px;
+    margin-top: 6px;
+    border: 0;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.audiojs .ap-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 15px;
+    width: 0;
+    background: #ffffff;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.audiojs .ap-loaded {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 15px;
+    width: 0;
+    background: #666;
+    cursor: pointer;
+}
+
+.audiojs .ap-time {
+    float: right;
+    width: 75px;
+    height: 20px;
+    line-height: 20px;
+    margin: 3px 0;
+    padding: 0 12px 0;
+    color: #ddd;
+    cursor: default;
+    font-size: 0.9em;
+}
+
+.audiojs .ap-time em {
+    padding: 0px 2px 0px 0px;
+    color: #f9f9f9;
+    font-style: normal;
+}
+
+.audiojs .ap-time strong {
+    padding: 0px 0px 0px 2px;
+    font-weight: normal;
+}
+
+.audiojs .ap-error-message {
+    float: left;
+    display: none;
+    margin: 6px 10px 0;
+    height: 20px;
+    width: 70%;
+    max-width: 400px;
+    overflow: hidden;
+    line-height: 20px;
+    white-space: nowrap;
+    color: #fff;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    -icab-text-overflow: ellipsis;
+    -khtml-text-overflow: ellipsis;
+    -moz-text-overflow: ellipsis;
+    -webkit-text-overflow: ellipsis;
+}
+
+.audiojs .ap-error-message a {
+    color: #eee;
+    text-decoration: none;
+    padding-bottom: 1px;
+    border-bottom: 1px solid #999;
+    white-space: nowrap;
+}
+
+.audiojs .ap-play {
+    background: url("../image/audioplayer.gif") -2px -1px no-repeat;
+}
+
+.audiojs .ap-loading {
+    background: url("../image/audioplayer.gif") -2px -31px no-repeat;
+}
+
+.audiojs .ap-error {
+    background: url("../image/audioplayer.gif") -2px -61px no-repeat;
+}
+
+.audiojs .ap-pause {
+    background: url("../image/audioplayer.gif") -2px -91px no-repeat;
+}
+
+.ap-playing .ap-play, .ap-playing .ap-loading, .ap-playing .ap-error {
+    display: none;
+}
+
+.ap-playing .ap-pause {
+    display: block;
+}
+
+.ap-loading .ap-play, .ap-loading .ap-pause, .ap-loading .ap-error {
+    display: none;
+}
+
+.ap-loading .ap-loading {
+    display: block;
+}
+
+.ap-error .ap-time, .ap-error .ap-play, .ap-error .ap-pause, .ap-error .ap-scrubber, .ap-error .ap-loading {
+    display: none;
+}
+
+.ap-error .ap-error {
+    display: block;
+}
+
+.ap-error .ap-play-pause p {
+    cursor: auto;
+}
+
+.ap-error .ap-error-message {
+    display: block;
+}
+
+#audioplayer {
+    margin: 15px 0 0;
+    overflow: auto;
+}
+
+#audioplayer ol {
+    list-style: square inside;
+    color: #ccc;
+    width: 100%;
+    max-width: 390px;
+    font-size: 0.9em;
+    text-align: left;
+    background: #ffffff;
+    padding: 0;
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -khtml-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
+    margin-bottom: 5px;
+}
+
+#audioplayer ol li {
+    position: relative;
+    padding: 7px 15px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+}
+
+#audioplayer ol li:last-of-type {
+    border-bottom: none;
+}
+
+#audioplayer ol li a {
+    text-indent: -3.3ex;
+    text-decoration: none;
+    color: #8a8a8a;
+}
+
+#audioplayer li a:hover {
+    color: #000;
+    text-decoration: none;
+}
+
+#audioplayer li.ap-playing a {
+    color: #000;
+}

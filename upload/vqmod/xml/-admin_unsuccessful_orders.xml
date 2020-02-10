@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[Unsuccessful Carts + Orders]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[OC-addons.com - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="admin/controller/common/home.php">
+<operation error="log">
+<search position="after"><![CDATA[$this->data['total_order'] = $this->model_sale_order->getTotalOrders();]]></search>
+<add><![CDATA[
+	$this->data['total_unsuccessful_orders'] = $this->model_sale_order->getUnsuccessfulOrderCount();
+	$this->data['unsuccessful_order_ids'] = $this->model_sale_order->getUnsuccessfulOrderIds();
+]]></add>
+</operation>
+</file>
+
+<file name="admin/model/sale/order.php">
+<operation error="log">
+<search position="before"><![CDATA[public function getTotalOrders($data = array()) {]]></search>
+<add><![CDATA[
+	public function getUnsuccessfulOrderCount() {
+	$sql = "SELECT COUNT( Distinct `email`) as total FROM `" . DB_PREFIX . "order` 
+	where `order_status_id` = 0
+	and `date_added` > DATE_SUB(CURDATE(),INTERVAL 121 DAY)";
+	$query = $this->db->query($sql);
+	return $query->row['total'];
+	}
+	public function getUnsuccessfulOrderIds() {
+	$sql = "SELECT GROUP_CONCAT(CAST(`order_id` AS CHAR)) as order_ids FROM `" . DB_PREFIX . "order` 
+	where `order_status_id` = 0 AND `email` NOT IN (
+	SELECT `email` FROM `" . DB_PREFIX . "order` 
+	where `order_status_id` > 0 and `date_added` > DATE_SUB(CURDATE(),INTERVAL 31 DAY)
+	)";
+	$query = $this->db->query($sql);
+	return $query->row['order_ids'];
+	}
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace"><![CDATA[$sql .= " AND o.order_id = '" . (int)$data['filter_order_id'] . "'";]]></search>
+<add><![CDATA[
+	$sql .= " AND o.order_id IN (" . $data['filter_order_id'] . ")";
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace"><![CDATA[$sql .= " WHERE o.order_status_id > '0'";]]></search>
+<add><![CDATA[
+	$sql .= " WHERE o.order_status_id >= '0'";
+]]></add>
+</operation>
+</file>
+
+<file name="admin/view/template/common/header.tpl">
+<operation error="log">
+<search position="before"><![CDATA[<?php foreach ($styles as $style) { ?>]]></search>
+<add><![CDATA[
+	<style>.successful td{color:green;font-weight:bold} .unsuccessful td{color:darkred}</style>
+]]></add>
+</operation>
+</file>
+
+<file name="admin/view/template/common/home.tpl">
+<operation error="log">
+<search position="after"><![CDATA[<table>]]></search>
+<add><![CDATA[
+	<tr>
+	<td>Failed Orders in 120 days: <a href="<?php echo HTTP_SERVER ?>index.php?route=sale/order&token=<?php echo $this->session->data['token'] ?>&filter_order_status_id=0&filter_order_id=<?php echo $unsuccessful_order_ids; ?>">View</a></td>
+	<td><?php echo $total_unsuccessful_orders; ?></td>
+	</tr>
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace" offset="1"><![CDATA[<?php foreach ($orders as $order) { ?>]]></search>
+<add><![CDATA[
+	<?php foreach ($orders as $order) { ?>
+	<tr class="<?php if($order['status']){ echo 'successful'; } else { echo 'unsuccessful'; } ?>">
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace"><![CDATA[<td class="center"><?php echo $order['status']; ?></td>]]></search>
+<add><![CDATA[
+	<td class="left"><?php if($order['status']){ echo $order['status']; } else { echo 'Failed Order'; } ?></td>
+]]></add>
+</operation>
+</file>
+
+<file name="admin/view/template/sale/order_list.tpl">
+<operation error="log">
+<search position="replace" offset="1"><![CDATA[<?php foreach ($orders as $order) { ?>]]></search>
+<add><![CDATA[
+	<?php foreach ($orders as $order) { ?>
+	<tr class="<?php if($order['status']){ echo 'successful'; } else { echo 'unsuccessful'; } ?>">
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace"><![CDATA[<td class="center"><?php echo $order['status']; ?></td>]]></search>
+<add><![CDATA[
+	<td class="left"><?php if($order['status']){ echo $order['status']; } else { echo 'Failed Order'; } ?></td>
+]]></add>
+</operation>
+</file>
+
+</modification>

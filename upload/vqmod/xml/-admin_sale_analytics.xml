@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[Sale Analytics Report]]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[TechTeema - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="admin/controller/common/header.php">
+<operation error="log">
+<search position="after"><![CDATA[$this->data['report_sale_coupon'] = $this->url->link('report/sale_coupon', 'token=' . $this->session->data['token'], 'SSL');]]></search>
+<add><![CDATA[
+	$this->data['report_sale_analytics'] = $this->url->link('report/sale_analytics', 'token=' . $this->session->data['token'], 'SSL');
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="after"><![CDATA[$this->data['text_report_sale_coupon'] = $this->language->get('text_report_sale_coupon');]]></search>
+<add><![CDATA[
+	$this->data['text_report_sale_analytics'] = $this->language->get('text_report_sale_analytics');
+]]></add>
+</operation>
+</file>
+
+<file name="admin/language/*/common/header.php">
+<operation error="log">
+<search position="after"><![CDATA[$_['text_sale']]]></search>
+<add><![CDATA[
+	$_['text_report_sale_analytics'] = 'Sale Analytics Report'; ]]></add>
+</operation>
+</file>
+
+<file name="admin/view/template/common/header.tpl">
+<operation error="log">
+<search position="after"><![CDATA[<?php echo $text_report_sale_coupon; ?></a></li>]]></search>
+<add><![CDATA[
+	<li><a href="<?php echo $report_sale_analytics; ?>"><?php echo $text_report_sale_analytics; ?></a></li>
+]]></add> 
+</operation>
+</file>
+
+</modification>

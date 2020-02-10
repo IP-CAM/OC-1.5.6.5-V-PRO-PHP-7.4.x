@@ -1,0 +1,34 @@
+<?php
+$_['text_ds_brands'] = 'Manufacturer:';
+$_['text_ds_model'] = 'Model:';
+$_['text_ds_sku'] = 'SKU:';
+$_['text_ds_upc'] = 'UPC:';
+$_['text_ds_ean'] = 'EAN:';
+$_['text_ds_jan'] = 'JAN:';
+$_['text_ds_isbn'] = 'ISBN:';
+$_['text_ds_mpn'] = 'MPN:';
+$_['text_ds_quantity'] = 'Product Quantity:';
+$_['text_ds_sales'] = 'Sales:';
+$_['text_ds_views'] = 'Views:';
+$_['text_ds_stockstatus'] = 'Stock Status:';
+$_['text_ds_requires_shipping'] = 'Requires Shipping:';
+$_['text_ds_date_available'] = 'Date Available:';
+$_['text_ds_dimensions'] = 'Dimensions (L x W x H):';
+$_['text_ds_weight'] = 'Weight:';
+$_['text_ds_categories'] = 'Product Categories:';
+$_['text_ds_attribute'] = 'Attributes:';
+$_['text_ds_options'] = 'Options:';
+$_['text_ds_description'] = 'Description:';
+$_['text_ds_save'] = 'Your Save:';
+$_['text_ds_save_percent'] = 'Save:';
+$_['text_ds_special_date'] = 'Special Offer valid until:';
+$_['text_ds_special_time'] = 'Special Time:';
+$_['text_ds_reward'] = 'Reward Points:';
+$_['text_ds_points'] = 'Price in Reward Points:';
+$_['text_ds_all_prices'] = 'Price in other currencies:';
+$_['text_ds_rating'] = 'Rating:';
+$_['text_ds_reviews'] = 'Review(s):';
+$_['text_ds_instock'] = 'Instock';
+$_['text_ds_yes'] = 'Yes';
+$_['text_ds_no'] = 'No';
+?>

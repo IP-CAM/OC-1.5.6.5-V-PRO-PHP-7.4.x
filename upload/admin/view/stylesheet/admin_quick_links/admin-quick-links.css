@@ -1,0 +1,54 @@
+/* Admin Quick Links*/
+ul#aql{
+  margin: 10px 0;
+
+  list-style: none outside none;
+  overflow: hidden;
+  line-height: 1 !important;
+  margin: 0 0 10px 0!important;
+  padding: 0!important;
+  border: none!important;
+}
+
+ul#aql li{
+  display: inline-block;
+  line-height: 1 !important;
+  margin: 0px!important;
+  padding: 0px!important;
+  border-width: 0px !important;
+  padding-right: 0.7em!important;
+  padding-left: 0px!important;
+}
+
+ul#aql a{
+  display:block;
+  text-align:center;
+  line-height: 1 !important;
+  text-decoration:none !important;
+
+  border-right: 0px dotted rgba(0, 0, 0, 0.1);
+  border-bottom: 0px dotted rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  color:#eee;
+
+  -webkit-transition: color 200ms ease-in,background-color 200ms ease-in;
+  transition: color 200ms ease-in,background-color 200ms ease-in;
+
+  /*variables:*/
+  background-color: #547C96;
+}
+ul#aql a:hover{
+  background-color: #eee;
+
+  /*variables:*/
+  color:#547C96;
+}
+
+ul#aql i{
+  display:block;
+  padding: 0.3em 0 !important;
+  font-style:normal !important;
+  width:1.6em;
+  /*variables:*/
+  font-size: 20px;
+}

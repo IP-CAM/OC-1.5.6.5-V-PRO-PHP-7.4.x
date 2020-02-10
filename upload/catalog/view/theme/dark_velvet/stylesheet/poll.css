@@ -1,0 +1,5 @@
+#poll table{width:100%;border-top:1px solid #DDDDDD;}
+#poll td.bottom{border-bottom:1px solid #DDDDDD;}
+#poll .vote{margin-top:10px;text-align:center;}
+.chart{border:1px solid #DDDDDD;padding:2px;text-align:center;}
+.enlargement{margin-bottom:10px;text-align:center;font-size:11px;}

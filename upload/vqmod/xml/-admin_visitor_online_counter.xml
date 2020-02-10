@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[Admin Visitors Online Counter]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[OC-addons.com - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="admin/model/catalog/review.php">
+<operation error="abort">
+<search position="before"><![CDATA[public function addReview($data)]]>
+</search>
+<add><![CDATA[
+	public function getTotalVisitors() {
+	$query = $this->db->query("SELECT COUNT(DISTINCT(`ip`)) as total_visitors FROM `" . DB_PREFIX . "customer_online` WHERE `" . DB_PREFIX . "customer_online`.`date_added` > DATE_SUB(NOW(), INTERVAL 720 MINUTE);");
+	return $query->row['total_visitors'];
+	}
+]]></add>
+</operation>
+</file>
+
+<file name="admin/controller/common/header.php">
+<operation error="abort">
+<search position="before"><![CDATA[$this->data['stores'] = array();]]></search>
+<add><![CDATA[
+	$this->load->model('catalog/review');
+	$this->data['total_visitors'] = $this->model_catalog_review->getTotalVisitors();
+]]></add>
+</operation>
+</file>
+
+<file name="admin/view/template/common/header.tpl">
+<operation error="log">
+<search position="before" offset="1"><![CDATA[<li id="store"><a href="<?php echo $store; ?>]]></search>
+<add><![CDATA[
+	<li id="visitors_online"><a class="top" href="<?php echo 'index.php?route=report/customer_online&token=' . $this->session->data['token']; ?>"> <?php echo "<span style=\"background-color: #d9534f; display: inline;padding: .4em .7em .4em .7em;font-size: 75%;font-weight: bold;color: #ffffff;text-align: center;white-space: nowrap;vertical-align: baseline;border-radius: .25em;\"> " .$total_visitors . "</span>" ?> &nbsp;Visitors</a></li>
+]]></add>
+</operation>
+</file>
+
+</modification>

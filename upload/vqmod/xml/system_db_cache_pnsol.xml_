@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[DB Cache for Opencart]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[PN Solutions - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="system/startup.php">
+<operation error="log"> 
+<search position="before" offset="0"><![CDATA[require_once(DIR_SYSTEM . 'library/db.php');]]></search>
+<add><![CDATA[
+	require_once(DIR_SYSTEM . 'library/pnsols/db_cache.php');
+]]></add>
+</operation>
+</file>
+	
+<file name="system/library/response.php">
+<operation error="log"> 
+<search position="after" offset="1"><![CDATA[echo $output;]]></search>
+<add><![CDATA[
+	if (Registry::getInstance()->get('config')->get('db_cache_status')) { 
+	if (DbCache::isCreated() && DbCache::getInstance()->isChanged()) DbCache::getInstance()->saveCacheToFile();
+	}
+]]></add>
+</operation>
+</file>
+
+<file name="system/engine/registry.php">
+<operation error="log"> 
+<search position="after" offset="1"><![CDATA[final class Registry {]]></search>
+<add><![CDATA[
+	private static $instance;
+	public static function getInstance() {
+	return self::$instance;
+	}
+	public function __construct() {
+	self::$instance = $this;
+	}
+]]></add>
+</operation>
+</file>
+
+<file name="system/library/db.php">
+<operation error="log"> 
+<search position="replace"><![CDATA[return $this->driver->query($sql);]]></search>
+<add><![CDATA[
+	if (!Registry::getInstance()->get('config')->get('db_cache_status')) 
+	return $this->queryNonCache($sql);
+	if (!stripos($_SERVER['REQUEST_URI'], '/admin')) {
+	return DbCache::processDbQuery($this, $sql);
+	}
+	return $this->queryNonCache($sql);	
+	}
+	public function queryNonCache($sql) {
+	return $this->driver->query($sql);
+]]></add>
+</operation>
+</file>
+
+</modification>

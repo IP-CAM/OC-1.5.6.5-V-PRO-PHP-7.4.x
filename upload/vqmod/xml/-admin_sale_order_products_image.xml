@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[Product Image in Order Info+Product List]]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[inhs.web.id - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="admin/controller/sale/order.php">
+<operation error="log">
+<search position="before"><![CDATA[foreach ($products as $product)]]></search>
+<add><![CDATA[
+	$this->load->model('tool/image');
+	$this->load->model('catalog/product');
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="before"><![CDATA[$options = $this->model_sale_order->getOrderOptions($this->request->get['order_id'], $product['order_product_id']);]]></search>
+<add><![CDATA[
+	$product_info = $this->model_catalog_product->getProduct($product['product_id']);
+	if ($product_info['image'] && file_exists(DIR_IMAGE . $product_info['image'])) {
+	$image = $this->model_tool_image->resize($product_info['image'], 80, 80);
+	} else {
+	$image = $this->model_tool_image->resize('no_image.jpg', 40, 40);
+	}
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="after"><![CDATA[$this->data['products'][] = array(]]></search>
+<add><![CDATA[
+	'image'=>$image,
+]]>
+</add>
+</operation>
+
+<operation error="log">
+<search position="before"><![CDATA[$this->data['column_product'] = $this->language->get('column_product');]]></search>
+<add><![CDATA[
+		$this->data['column_image'] = $this->language->get('column_image');
+]]>
+</add>
+</operation>
+</file>
+
+<file name="admin/view/template/sale/order_info.tpl">
+<operation error="log">
+<search position="before"><![CDATA[<td class="left"><?php echo $column_product; ?></td>]]></search>
+<add><![CDATA[
+              <td class="left"><?php echo $column_image; ?></td>
+]]>
+</add>
+</operation>
+<operation error="log">
+<search position="before"><![CDATA[<td class="left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>]]></search>
+<add><![CDATA[
+              <td class="left"><img src="<?php echo $product['image']; ?>">
+]]>
+</add>
+</operation>
+<operation error="log">
+<search position="replace"><![CDATA[<td colspan="4" class="right"><?php echo $totals['title']; ?>:</td>]]></search>
+<add><![CDATA[<td colspan="5" class="right"><?php echo $totals['title']; ?>:</td>]]>
+</add>
+</operation>
+</file>
+
+<file name="admin/language/english/sale/order.php">
+<operation error="log">
+<search position="before"><![CDATA[$_['column_product']]]></search>
+<add><![CDATA[
+$_['column_image']                            = 'Image';
+]]>
+</add>
+</operation>
+</file>
+</modification>

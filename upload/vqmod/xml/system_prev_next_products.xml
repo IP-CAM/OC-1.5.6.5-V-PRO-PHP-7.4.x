@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[Previous/Next Product Links]]></id>
+<version><![CDATA[OS 1.75 Merkent]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[ the1path.com - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="catalog/controller/product/product.php">
+<operation error="log">
+<search position="after"><![CDATA[$this->data['heading_title'] = $product_info['name'];]]></search>
+<add><![CDATA[
+	$next_prod = $this->model_catalog_product->getProduct($product_id+1);
+	$prev_prod = $this->model_catalog_product->getProduct($product_id-1);
+
+	if ( $next_prod ) {
+	$this->data['next_link'] = $this->url->link('product/product', 'product_id=' .  $next_prod['product_id']);
+	$this->data['next_name']= $next_prod['name'];
+	} else {
+	$this->data['next_link'] = '';
+	$this->data['next_name']= '';
+	}
+
+	if ( $prev_prod ) {
+	$this->data['prev_link'] = $this->url->link('product/product', 'product_id=' .  $prev_prod['product_id']);
+	$this->data['prev_name']= $prev_prod['name'];
+	} else {
+	$this->data['prev_link'] = '';
+	$this->data['prev_name']= '';
+	}
+]]></add>
+</operation>
+</file>
+
+<file name="catalog/view/theme/*/template/product/product.tpl">
+<operation error="log">
+<search position="before"><![CDATA[<h1><?php echo $heading_title; ?></h1>]]></search>
+<add><![CDATA[
+	<span style="display:block; text-align:right;margin-bottom:20px;">
+	<?php if ( $prev_name ) { ?>
+	 <a class="btn" id="prev-product" href="<?php echo $prev_link; ?>" title="<?php echo $prev_name; ?>"><i class=" fa fa-caret-left fa-lg"></i>&nbsp;<?php echo $this->language->get('text_prev_name'); ?></a>
+	<?php } ?> 
+	<?php if ( $next_name ) { ?>
+	 &nbsp; &nbsp;<a class="btn" id="next-product" href="<?php echo $next_link; ?>" title="<?php echo $next_name; ?>"><?php echo $this->language->get('text_next_name'); ?>&nbsp;<i class="fa fa-caret-right fa-lg"></i></a>
+	<?php } ?>
+	</span>
+]]></add>
+</operation>
+</file>
+
+</modification>

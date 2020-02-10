@@ -1,0 +1,173 @@
+/*
+ * Smart Banner (Horizontal)
+ *
+ * Copyright 2013, Mediasmartbanner 
+ */
+ 
+/* Smartbanner */
+.smartbanner {margin: 0 auto;text-align: center;} 
+.smartbanner > div {display:inline;} 
+.smartbanner > div img {margin: 10px 3.7px;display: inline-block;}
+
+.smartbanner2 {margin: 0 auto;text-align: center;} 
+.smartbanner2 > div {display:inline;} 
+.smartbanner2 > div img {margin: 10px 3.7px;display: inline-block;}
+.smartbanner2 > div img {width: 49.05%;height: auto;}
+
+.smartbanner3 {margin: 0 auto;text-align: center;} 
+.smartbanner3 > div {display:inline;} 
+.smartbanner3 > div img {margin: 10px 3.7px;display: inline-block;}
+.smartbanner3 > div img {width: 32.3%;height: auto;}
+
+.smartbanner4 {margin: 0 auto;text-align: center;} 
+.smartbanner4 > div {display:inline;} 
+.smartbanner4 > div img {margin: 10px 3.7px;display: inline-block;}
+.smartbanner4 > div img {width: 23.9%;height: auto;}
+
+.smartbanner5 {margin: 0 auto;text-align: center;} 
+.smartbanner5 > div {display:inline;} 
+.smartbanner5 > div img {margin: 10px 3.7px;display: inline-block;}
+.smartbanner5 > div img {width: 18.9%;height: auto;}
+
+.smartbanner6 {margin: 0 auto;text-align: center;} 
+.smartbanner6 > div {display:inline;} 
+.smartbanner6 > div img {margin: 10px 3.7px;display: inline-block;}
+.smartbanner6 > div img {width: 15.6%;height: auto;}
+	
+#column-left + #content .smartbanner2 > div img {width: 48.8%;height: auto;}
+#column-right + #content .smartbanner2 > div img {width: 48.8%;height: auto;}
+#column-left + #column-right + #content .smartbanner2 > div img {width: 48.2%;height: auto;}
+	
+#column-left + #content .smartbanner3 > div img {width: 32.0%;height: auto;}
+#column-right + #content .smartbanner3 > div img {width: 32.0%;height: auto;}
+#column-left + #column-right + #content .smartbanner3 > div img {width: 31.6%;height: auto;}
+	
+#column-left + #content .smartbanner4 > div img {width: 23.7%;height: auto;}
+#column-right + #content .smartbanner4 > div img {width: 23.7%;height: auto;}
+#column-left + #column-right + #content .smartbanner4 > div img {width: 23.2%;height: auto;}
+	
+#column-left + #content .smartbanner5 > div img {width: 18.6%;height: auto;}
+#column-right + #content .smartbanner5 > div img {width: 18.6%;height: auto;}
+#column-left + #column-right + #content .smartbanner5 > div img {width: 18.1%;height: auto;}
+		
+#column-left + #content .smartbanner6 > div img {width: 15.3%;height: auto;}
+#column-right + #content .smartbanner6 > div img {width: 15.3%;height: auto;}
+#column-left + #column-right + #content .smartbanner6 > div img {width: 14.8%;height: auto;}
+
+
+/*----------------------------------------------------------
+		Responsive View for 1280px
+---------------------------------------------------------*/
+@media only screen and (min-width: 1240px) and (max-width:1280px) {	
+	.smartbanner2 > div img {width: 49.2%;height: auto;}	
+	.smartbanner3 > div img {width: 32.5%;height: auto;}
+	.smartbanner4 > div img {width: 23.9%;height: auto;}
+	.smartbanner5 > div img {width: 19%;height: auto;}
+	.smartbanner6 > div img {width: 15.8%;height: auto;}
+	
+	#column-left + #content .smartbanner2 > div img {width: 49.0%;height: auto;}
+	#column-right + #content .smartbanner2 > div img {width: 49.0%;height: auto;}
+	#column-left + #column-right + #content .smartbanner2 > div img {width: 48.8%;height: auto;}
+	
+	#column-left + #content .smartbanner3 > div img {width: 32.3%;height: auto;}
+	#column-right + #content .smartbanner3 > div img {width: 32.3%;height: auto;}
+	#column-left + #column-right + #content .smartbanner3 > div img {width: 32.0%;height: auto;}
+	
+	#column-left + #content .smartbanner4 > div img {width: 23.9%;height: auto;}
+	#column-right + #content .smartbanner4 > div img {width: 23.9%;height: auto;}
+	#column-left + #column-right + #content .smartbanner4 > div img {width: 23.7%;height: auto;}
+		
+	#column-left + #content .smartbanner5 > div img {width: 18.9%;height: auto;}
+	#column-right + #content .smartbanner5 > div img {width: 18.9%;height: auto;}
+	#column-left + #column-right + #content .smartbanner5 > div img {width: 18.6%;height: auto;}
+		
+	#column-left + #content .smartbanner6 > div img {width: 15.6%;height: auto;}
+	#column-right + #content .smartbanner6 > div img {width: 15.6;height: auto;}
+	#column-left + #column-right + #content .smartbanner6 > div img {width: 15.2%;height: auto;}
+		
+	
+}
+
+
+/*----------------------------------------------------------
+		Responsive View for 980px
+---------------------------------------------------------*/
+@media only screen and (min-width: 980px) and (max-width: 1239px) {	
+	.smartbanner2 > div img {width: 49.05%;height: auto;}
+	.smartbanner3 > div img {width: 32.3%;height: auto;}
+	.smartbanner4 > div img {width: 23.9%;height: auto;}
+	.smartbanner5 > div img {width: 18.9%;height: auto;}
+	.smartbanner6 > div img {width: 15.6%;height: auto;}
+	
+	#column-left + #content .smartbanner2 > div img {width: 48.8%;height: auto;}
+	#column-right + #content .smartbanner2 > div img {width: 48.8%;height: auto;}
+	#column-left + #column-right + #content .smartbanner2 > div img {width: 48.2%;height: auto;}
+	
+	#column-left + #content .smartbanner3 > div img {width: 32.0%;height: auto;}
+	#column-right + #content .smartbanner3 > div img {width: 32.0%;height: auto;}
+	#column-left + #column-right + #content .smartbanner3 > div img {width: 31.6%;height: auto;}
+	
+	#column-left + #content .smartbanner4 > div img {width: 23.7%;height: auto;}
+	#column-right + #content .smartbanner4 > div img {width: 23.7%;height: auto;}
+	#column-left + #column-right + #content .smartbanner4 > div img {width: 23.2%;height: auto;}
+	
+	#column-left + #content .smartbanner5 > div img {width: 18.6%;height: auto;}
+	#column-right + #content .smartbanner5 > div img {width: 18.6%;height: auto;}
+	#column-left + #column-right + #content .smartbanner5 > div img {width: 18.1%;height: auto;}
+		
+	#column-left + #content .smartbanner6 > div img {width: 15.3%;height: auto;}
+	#column-right + #content .smartbanner6 > div img {width: 15.3%;height: auto;}
+	#column-left + #column-right + #content .smartbanner6 > div img {width: 14.8%;height: auto;}
+	
+	
+}
+
+/*----------------------------------------------------------
+		Responsive View for 768px
+---------------------------------------------------------*/
+@media only screen and (min-width: 768px) and (max-width: 979px) {	
+	.smartbanner2 > div img {width: 48.7%;height: auto;}
+	.smartbanner3 > div img {width: 32.0%;height: auto;}
+	.smartbanner4 > div img {width: 23.5%;height: auto;}
+	.smartbanner5 > div img {width: 18.6%;height: auto;}
+	.smartbanner6 > div img {width: 15.3%;height: auto;}	
+		
+}
+
+/*----------------------------------------------------------
+		Responsive View for 640px
+---------------------------------------------------------*/
+@media only screen and (min-width: 640px) and (max-width: 767px) {	
+	
+	.smartbanner2 > div img {width: 48.5%;height: auto;}
+	.smartbanner3 > div img {width: 31.7%;height: auto;}
+	.smartbanner4 > div img {width: 23.4%;height: auto;}
+	.smartbanner5 > div img {width: 18.3%;height: auto;}
+	.smartbanner6 > div img {width: 15.0%;height: auto;}	
+	
+}
+
+/*----------------------------------------------------------
+		Responsive View for 480px
+---------------------------------------------------------*/
+@media only screen and (min-width: 480px) and (max-width: 639px) {	
+	.smartbanner2 > div img {width: 48%;height: auto;margin: 5px 3.7px;}	
+	.smartbanner3 > div img {width: 31.1%;height: auto;margin: 5px 3.7px;}
+	.smartbanner4 > div img {width: 22.8%;height: auto;margin: 5px 3.7px;}
+	.smartbanner5 > div img {width: 31.2%;height: auto;margin: 5px 3.7px;}
+	.smartbanner6 > div img {width: 31.1%;height: auto;margin: 5px 3.7px;}	
+	
+}
+
+/*----------------------------------------------------------
+		Responsive View for 320px
+---------------------------------------------------------*/
+@media only screen and (max-width: 479px) {	
+	
+	.smartbanner2 > div img {width: 99%;height: auto;margin: 5px 0px;}		
+	.smartbanner3 > div img {width: 99%;height: auto;margin: 5px 0px;}
+	.smartbanner4 > div img {width: 46.9%;height: auto;margin: 5px 3px;}
+	.smartbanner5 > div img {width: 46.9%;height: auto;margin: 5px 3px;}
+	.smartbanner6 > div img {width: 46.9%;height: auto;margin: 5px 3px;}		
+}
+

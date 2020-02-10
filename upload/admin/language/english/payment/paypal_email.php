@@ -1,0 +1,39 @@
+<?php
+// Heading
+$_['heading_title']					 = 'PayPal by Email';
+
+// Text
+$_['text_payment']					 = 'Payment';
+$_['text_success']					 = 'Success: You have modified PayPal by Email details!';
+$_['text_paypal_email']				 = '<a href="https://www.paypal.com/uk/mrb/pal=W9TBB5DTD6QJW" target="_blank"><img src="view/image/payment/paypal.png" alt="PayPal" title="PayPal" style="border: 1px solid #EEEEEE;" /></a>';
+$_['text_authorization']			 = 'Authorization';
+$_['text_sale']						 = 'Sale';
+
+// Entry
+$_['entry_paypal_info']				 = 'PayPal instructions:';
+$_['entry_email']					 = 'E-Mail:';
+$_['entry_test']					 = 'Sandbox Mode:';
+$_['entry_transaction']				 = 'Transaction Method:';
+$_['entry_debug']					 = 'Debug Mode:<br/><span class="help">Logs additional information to the system log.</span>';
+$_['entry_total']                    = 'Total:<br /><span class="help">The checkout total the order must reach before this payment method becomes active.</span>';
+$_['entry_processed_status']		 = 'Processed Status:<br /><span class="help">set default status for order placed with this payment method';
+$_['entry_completed_status']		 = 'Completed Status:<br /><span class="help">set the status for the order when payed on paypal website';
+$_['entry_canceled_reversal_status'] = 'Canceled Reversal Status:';
+$_['entry_denied_status']			 = 'Denied Status:';
+$_['entry_expired_status']			 = 'Expired Status:';
+$_['entry_failed_status']			 = 'Failed Status:';
+$_['entry_pending_status']			 = 'Pending Status:';
+$_['entry_refunded_status']			 = 'Refunded Status:';
+$_['entry_reversed_status']			 = 'Reversed Status:';
+$_['entry_voided_status']		     = 'Voided Status:';
+$_['entry_geo_zone']				 = 'Geo Zone:';
+$_['entry_status']					 = 'Status:';
+$_['entry_sort_order']				 = 'Sort Order:';
+$_['entry_geo_zone']				 = 'Geo Zone:';
+$_['entry_status']					 = 'Status:';
+$_['entry_sort_order']				 = 'Sort Order:';
+
+// Error
+$_['error_permission']				 = 'Warning: You do not have permission to modify payment PayPal by Email!';
+$_['error_email']					 = 'E-Mail required!';
+?>

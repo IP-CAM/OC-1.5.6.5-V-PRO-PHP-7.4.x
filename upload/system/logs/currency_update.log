@@ -1,0 +1,2 @@
+2020-01-23 21:48:41 - Curl init : https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=GBP&apikey=b9bf8fb86e71
+2020-01-23 21:48:41 - Curl init : https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=EUR&apikey=b9bf8fb86e71

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[Change status color for all]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[DevApp - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="/admin/language/english/english.php">
+<operation error="log">
+<search position="replace"><![CDATA[= 'Enabled';]]></search>
+<add><![CDATA[
+= '<font color="#008542">Enabled</font>';
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace"><![CDATA[= 'Disabled';]]></search>
+<add><![CDATA[
+= '<font color="#000000">Disabled</font>';
+]]></add>
+</operation>
+</file>
+
+</modification>

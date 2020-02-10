@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[OpenShop advanced Dasboard]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[MaxD - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<!-- Top menu & buttons hovers -->
+<file name="admin/view/template/common/header.tpl">
+<operation error="log">
+<search position="before"><![CDATA[$scripts as $script]]></search>
+<add><![CDATA[<style type="text/css">
+	.overview {width: 24%;}
+	.statistic {float: left;padding-left: 15px;}
+	.news {float: right;width: 24%;margin-bottom: 20px;}
+	</style>
+]]></add>
+</operation>
+</file>
+
+<!-- Dashboard news -->
+<file name="admin/view/template/common/home.tpl">
+<operation error="log">
+<search position="before"><![CDATA[<div class="statistic">]]></search>
+<add><![CDATA[
+	<div class="news">
+	<div class="dashboard-heading">Ernie's OpenShop Infos</div>
+	<div class="dashboard-content" style="height189px;overflow:auto;text-align:center;">
+	<img style="margin-top: 10px;" src="http://evelo.li/shop/image/velomech1.png" width="187" height="144" alt="openshop.li" title="openshop.li">
+	<br />TEST TEST TEST</div>
+	</div>
+]]></add>
+</operation>
+</file>
+
+</modification>

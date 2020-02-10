@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[Contact Social]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[mona - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="catalog/controller/common/footer.php">
+<operation error="log">
+<search position="before"><![CDATA[$this->data['text_newsletter'] = $this->language->get('text_newsletter');]]></search>
+<add><![CDATA[
+	$this->data['name'] = $this->config->get('config_name');
+	$this->data['address'] = $this->config->get('config_address');
+	$this->data['telephone'] = $this->config->get('config_telephone');
+	$this->data['fax'] = $this->config->get('config_fax');
+]]></add>
+</operation>
+</file>
+
+<file name="catalog/view/theme/*/template/common/footer.tpl">
+<operation error="log">
+<search position="replace"><![CDATA[<?php echo $powered; ?>]]></search>
+<add><![CDATA[
+	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-8">
+	<div><?php echo $powered; ?></div></div>
+	<div class="col-xs-12 col-sm-5 col-md-5 col-lg-4">
+	<ul id="social">
+	<li><div><a href="#" onclick="window.open(this.href, '_blank');return false;"><span class="fa fa-facebook"></a></span></div></li>
+	<li><div><a href="#" onclick="window.open(this.href, '_blank');return false;"><span class="fa fa-twitter"></a></span></div></li>
+	<li><div><a href="#" onclick="window.open(this.href, '_blank');return false;"><span class="fa fa-google-plus"></a></span></div></li>
+	<li><div><a href="#" onclick="window.open(this.href, '_blank');return false;"><span class="fa fa-flickr"></a></span></div></li>
+	</ul>
+	</div>
+]]></add>
+</operation>
+</file>
+
+</modification>

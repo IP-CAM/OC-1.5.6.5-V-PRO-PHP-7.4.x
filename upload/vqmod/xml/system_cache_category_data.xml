@@ -1,0 +1,53 @@
+<modification>
+<id><![CDATA[Cache category data to speed up page load]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[weismannweb.com - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="catalog/controller/module/category.php">
+<operation error="log">
+<search position="after"><![CDATA[foreach ($categories as $category) {]]></search>
+<add><![CDATA[
+	$category_data = $this->cache->get('vqmod_category_data_controller_module_category'.$this->config->get('config_store_id'));
+	if ($category_data) {
+	$this->data['categories'] = $category_data;
+	break;
+	}
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="before"><![CDATA[if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/category.tpl')) {]]></search>
+<add><![CDATA[
+	if (!$category_data) {
+	$this->cache->set('vqmod_category_data_controller_module_category'.$this->config->get('config_store_id'), $this->data['categories']);
+	}
+]]></add>
+</operation>
+</file>
+
+ <file name="catalog/controller/common/header.php">
+<operation error="log">
+<search position="after"><![CDATA[foreach ($categories as $category) {]]></search>
+<add><![CDATA[
+	$category_data = $this->cache->get('vqmod_category_data_controller_common_header'.$this->config->get('config_store_id'));
+	if ($category_data) {
+	$this->data['categories'] = $category_data;
+	break;
+	}
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="before"><![CDATA[$this->children = array(]]></search>
+<add><![CDATA[
+	if (!$category_data) {
+	$this->cache->set('vqmod_category_data_controller_common_header'.$this->config->get('config_store_id'), $this->data['categories']);
+	}
+]]></add>
+</operation>
+</file>
+
+</modification>

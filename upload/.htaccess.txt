@@ -1,0 +1,207 @@
+# 1.To use URL Alias you need to be running apache with mod_rewrite enabled. 
+# 2. In your opencart directory rename htaccess.txt to .htaccess.
+## Ernie's OpenCart .htaccess File Sept-01-2019
+## AddHandler works on some Server, to DEFINE/FORCE a PHP Version, to be used.
+## It's only required, if some Modifications don't work with latest PHP Versions.
+#AddHandler application/x-httpd-php71 .php
+#AddHandler application/x-httpd-php72 .php
+#AddHandler application/x-httpd-php71 - 72 .php
+
+Options +FollowSymlinks 
+Options -Indexes
+#Options +SymLinksIfOwnerMatch
+SetEnvIfNoCase User-Agent "^Wget" bad_bot
+LimitRequestBody 750000
+
+<Files .htaccess>
+order allow,deny
+deny from all
+</Files>
+
+<Files ~ "^.*\.([Hh][Tt][Aa])">
+Order allow,deny
+Deny from all
+satisfy all
+</Files>
+
+<Files install.php>
+Order allow,deny
+Deny from all
+</Files>
+
+<Files wp-config.php>
+Order allow,deny
+Deny from all
+</Files>
+
+<Files debug.log>
+Order allow,deny
+Deny from all
+</Files>
+
+## Prevent Direct Access to Log files
+<Files  ~ "\.log$">
+Order allow,deny
+</Files>
+
+## Prevent Direct Access to files
+<FilesMatch "(?i)((^\.|\.txt|\.tpl|\.ini|\.log|(?<!robots)\.txt))"> 
+Order deny,allow
+Deny from all
+</FilesMatch> 
+
+<FilesMatch "\.php$">
+Order deny,allow
+Deny from all
+</FilesMatch>
+
+<FilesMatch "index[0-9]?\.php$">
+Order deny,allow
+Allow from all
+</FilesMatch>
+
+<FilesMatch "\.(jpg|jpeg|gif|png|ico|zip|svg|tgz|gz|rar|zip|bz2|pdf|ppt|tar|wav|bmp|txt|html|htm|woff2|woff|woff2|font.css|ttf|ttc|otf|eot|webp|css|js)$">
+Header set Cache-Control "max-age=2592000, public"
+ExpiresDefault "access plus 1 month"
+Header set Last-Modified "Wed, 05 Jun 2009 06:40:46 GMT"
+</FilesMatch>
+
+AddType application/x-font-woff .woff
+AddOutputFilterByType DEFLATE application/x-font-woff
+AddType image/svg+xml .svg
+AddOutputFilterByType DEFLATE image/svg+xml
+AddType application/x-font-woff .woff
+AddType application/x-font-woff .woff2
+AddOutputFilterByType DEFLATE application/x-font-woff
+AddType application/x-font-ttf .ttf
+AddOutputFilterByType DEFLATE application/x-font-ttf
+AddType application/x-font-eot .eot
+AddOutputFilterByType DEFLATE application/x-font-eot]
+
+## SEO URL Settings
+RewriteEngine On
+
+## If your opencart installation does not run on the main web folder,
+## make sure you folder it does run in ie. / becomes /cart/ or /shop/ 
+## it's now set to match the SubDirectory: /shop/
+RewriteBase /shop/
+
+RewriteRule ^sitemap.xml$ index.php?route=feed/google_sitemap [L]
+RewriteRule ^googlebase.xml$ index.php?route=feed/google_base [L]
+RewriteRule ^download/(.*) /index.php [L]
+RewriteRule ^system/(.*) /index.php [L]
+RewriteCond %{REQUEST_URI} !.*\.(php|PHP|ico|cur|txt|mp3|webp|svg|ttf|eot|woff|woff2|gif|jpg|JPG|jpeg|JPEG|png|js|cfg|css|pdf|zip|env|tar|sql|gz|tar|exe|rar|arj|cab|iso|rpm|tbz|tgz|old|bak|backup|dump|db|7z|asp|exp|html)$
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^?]*) index.php?_route_=$1 [L,QSA]
+
+## Block Common Malicious Bot Queries
+<IfModule mod_rewrite.c>
+RewriteCond %{QUERY_STRING} http\:\/\/www\.google\.com\/humans\.txt\? [NC,OR]
+RewriteCond %{QUERY_STRING} (img|thumb|thumb_editor|thumbopen).php [NC,OR]
+RewriteCond %{QUERY_STRING} fckeditor [NC]
+RewriteCond %{QUERY_STRING} revslider [NC]
+RewriteCond %{REQUEST_METHOD} ^TRACE 
+RewriteRule .* - [F,L]
+</IfModule>
+
+## Compression
+<ifModule mod_gzip.c>
+mod_gzip_on Yes
+mod_gzip_dechunk Yes
+mod_gzip_item_include file \.(html?|txt|css|js|php|pl)$
+mod_gzip_item_include handler ^cgi-script$
+mod_gzip_item_include mime ^text/.*
+mod_gzip_item_include mime ^application/x-javascript.*
+mod_gzip_item_exclude mime ^image/.*
+mod_gzip_item_exclude rspheader ^Content-Encoding:.*gzip.*
+</ifModule>
+
+<ifModule !mod_gzip.c>
+<IfModule mod_deflate.c>
+SetOutputFilter DEFLATE
+#SetEnvIfNoCase Request_URI \.(?:rar|zip)$ no-gzip
+#SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png|rar|zip|css|js)$ no-gzip
+SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png|rar|zip)$ no-gzip
+
+## Properly handle old browsers that do not support compression
+BrowserMatch ^Mozilla/4 gzip-only-text/html
+BrowserMatch ^Mozilla/4\.0[678] no-gzip
+BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+Header append Vary User-Agent
+</IfModule>
+
+## Allow cross-origin requests.
+<IfModule mod_headers.c>
+Header set Access-Control-Allow-Origin "*"
+</IfModule> 
+
+<IfModule mod_headers.c>
+<FilesMatch "\.(ttf|ttc|otf|ico|pdf|flv|eot|woff|woff2|font.css|css|js)$">
+Header set Access-Control-Allow-Origin "*"
+Header always append X-Frame-Options SAMEORIGIN
+</FilesMatch>
+</IfModule>
+
+## Send the CORS header for images when browsers request it.
+<IfModule mod_setenvif.c>
+<IfModule mod_headers.c>
+<FilesMatch "\.(bmp|cur|gif|ico|jpe?g|png|svgz?|webp)$">
+SetEnvIf Origin ":" IS_CORS
+Header set Access-Control-Allow-Origin "*" env=IS_CORS
+</FilesMatch>
+</IfModule>
+</IfModule>
+
+<IfModule !mod_deflate.c>
+<filesMatch "\\.(html|htm)$">
+php_value output_handler ob_gzhandler
+</filesMatch>
+</IfModule>
+
+## Enable Gzip Compression
+<IfModule mod_filter.c>
+AddOutputFilterByType DEFLATE text/text
+AddOutputFilterByType DEFLATE text/plain
+AddOutputFilterByType DEFLATE text/html
+AddOutputFilterByType DEFLATE text/xml
+AddOutputFilterByType DEFLATE text/css
+AddOutputFilterByType DEFLATE application/xml
+AddOutputFilterByType DEFLATE application/xhtml+xml
+AddOutputFilterByType DEFLATE application/rss+xml
+AddOutputFilterByType DEFLATE application/javascript
+AddOutputFilterByType DEFLATE application/x-javascript
+</IfModule> 
+
+## Leverage Browser Caching
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresByType image/jpg "access plus 1 year"
+ExpiresByType image/jpeg "access plus 1 year"
+ExpiresByType image/gif "access plus 1 year"
+ExpiresByType image/png "access plus 1 year"
+ExpiresByType text/css "access plus 1 month"
+ExpiresByType application/pdf "access plus 1 month"
+ExpiresByType text/x-javascript "access plus 1 month"
+ExpiresByType application/x-shockwave-flash "access plus 1 month"
+ExpiresByType image/x-icon "access plus 1 year"
+ExpiresDefault "access plus 1 month"
+
+Header set Connection keep-alive
+Header append Vary User-Agent
+</IfModule>
+
+<IfModule mod_headers.c>
+Header always set X-Content-Type-Options "nosniff"
+Header always set X-XSS-Protection "1; mode=block"
+Header always set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+ 
+#<IfModule mod_headers.c>
+#Header set Content-Security-Policy "script-src 'self' https://www.google.com"
+#</IfModule>
+
+<IfModule mod_security.c>
+SecFilterEngine On
+SecFilterScanPOST On
+</IfModule>

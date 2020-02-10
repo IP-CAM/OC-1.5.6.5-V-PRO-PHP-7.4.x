@@ -1,0 +1,1 @@
+$.fn.tabs=function(){var s=this;this.each(function(){var t=$(this);$(t.attr("href")).hide(),$(t).click(function(){return $(s).removeClass("selected"),$(s).each(function(t,s){$($(s).attr("href")).hide()}),$(this).addClass("selected"),$($(this).attr("href")).show(),!1})}),$(this).show(),$(this).first().click()};

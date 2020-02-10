@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[Show Name in Product Edit]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[stokeyblokey - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="admin/view/template/setting/setting.tpl">
+<operation error="log">
+<search position="replace"><![CDATA[<a href="#tab-fraud"><?php echo $tab_fraud; ?></a>]]></search>
+<add><![CDATA[]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace"><![CDATA[<div id="tab-fraud">]]></search>
+<add><![CDATA[
+	<div id="tab-fraud" style="display:none">
+]]></add>
+</operation>
+</file>
+
+<file name="admin/view/template/catalog/product_form.tpl">
+<operation error="log">
+<search position="r"><![CDATA[<img src="view/image/product.png" alt="" /> <?php echo $heading_title; ?>]]></search>
+<add trim="true"><![CDATA[
+	<img src="view/image/product.png" alt="" /> <?php echo $heading_title; ?> - <?php echo isset($product_description[$this->config->get('config_language_id')]) ? $product_description[$this->config->get('config_language_id')]['name'] : ''; ?></h1>
+]]></add>
+</operation>
+</file>
+
+</modification>

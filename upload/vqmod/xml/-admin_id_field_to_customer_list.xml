@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[Admin ID field to Product List]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[Vito - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="admin/view/template/sale/customer_list.tpl">
+<operation error="log">
+<search position="replace"><![CDATA[<td width="1" style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>]]></search>
+<add><![CDATA[
+	<td class="center">
+	<?php if ($sort == 'c.customer_id') { ?>
+	<a href="<?php echo $sort_id; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_id; ?></a>
+	<?php } else { ?>
+	<a href="<?php echo $sort_id; ?>"><?php echo $column_id; ?></a>
+	<?php } ?> 
+	</td>
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace" index="1"><![CDATA[<td></td>]]></search>
+<add><![CDATA[
+	<td class="center">
+	<input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" />
+	</td>
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace" offset="1"><![CDATA[<input type="checkbox" name="selected[]" value="<?php echo $customer['customer_id']; ?>" />]]></search>
+<add><![CDATA[
+	<input type="checkbox" name="selected[]" value="<?php echo $customer['customer_id']; ?>" />
+	<br />
+	<?php echo $customer['customer_id']; ?> 
+	<?php } ?></td>
+]]></add>
+</operation>
+</file>
+
+</modification>

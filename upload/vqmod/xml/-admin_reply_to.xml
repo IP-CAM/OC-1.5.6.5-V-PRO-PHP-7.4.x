@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[Reply-To Admin confirmation]]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[MadeByBenjamin.com - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="catalog/model/checkout/order.php">
+<operation error="log">
+<search position="after"><![CDATA[$mail->setTo($this->config->get('config_email'));]]></search>
+<add><![CDATA[
+	$mail->setReplyTo($order_info['email']);
+]]></add>
+</operation>
+</file>
+
+<file name="system/library/mail.php">
+<operation error="log">
+<search position="before"><![CDATA[public function setTo($to) {]]></search>
+<add><![CDATA[
+	public function setReplyTo($replyto) {
+	$this->replyto = $replyto;
+	}
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace"><![CDATA[$header .= 'Reply-To: ' . '=?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $this->from . '>' . $this->newline;]]></search>
+<add><![CDATA[
+	$header .= 'Reply-To: ' . '=?UTF-8?B?' . base64_encode($this->replyto) . '?=' . ' <' . $this->replyto . '>' . $this->newline;
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="after"><![CDATA[protected $subject;]]></search>
+<add><![CDATA[
+	protected $replyto;
+]]></add>
+</operation>
+</file>
+
+</modification>

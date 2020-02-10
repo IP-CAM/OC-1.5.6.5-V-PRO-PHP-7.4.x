@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[Display Category - ID]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[Ernie - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="admin/view/template/catalog/category_list.tpl">
+<operation error="log">
+<search position="before"><![CDATA[<td style="text-align: center;"><?php if ($category['selected'])]]></search>
+<add><![CDATA[
+	<td style="text-align: center;"><?php echo $category['category_id']; ?></td>
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="before"><![CDATA[<td width="1" style="text-align: center;"><input type="checkbox" onclick=]]></search>
+<add><![CDATA[
+	<td class="center">ID</td>
+]]></add>
+</operation>
+</file>
+
+</modification>

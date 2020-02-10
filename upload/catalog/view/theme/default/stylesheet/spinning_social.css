@@ -1,0 +1,71 @@
+@charset "UTF-8";
+ul#social {
+    float:right;
+	text-align: right;
+    transform: translatez(0);
+    -webkit-transform: translatez(0);
+    -ms-transform: translatez(0);
+    margin: 0;
+	padding-left: 0px;
+	margin-top: -120px;
+	margin-right: 40px;
+}
+ul#social li {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    margin-left: 10px;
+	margin-top:-8px;
+	margin-bottom: 15px;
+	list-style: none;
+}
+ul#social li a {
+	color: #ccc;  /* THIS CHANGES THE ICON COLOUR */
+}
+ul#social li div {
+	background-color: transparent; /* THIS CHANGES THE BACKGROUND COLOUR */
+	border: 1px solid #787878; /* THIS CHANGES THE BORDER COLOUR */
+	width: 40px;
+ 	height: 40px; 
+ 	font-size: 1.4em;
+ 	text-align: center;
+    line-height: 39px; 
+ 	transition: all .5s ease;
+ 	-webkit-border-radius: 40px;
+ 	-moz-border-radius: 40px;
+ 	border-radius: 40px;
+}
+ul#social li div .fa{
+	padding: 10px;
+}
+ul#social li a:hover {
+	color: #ccc;  /* THIS CHANGES THE ICON COLOUR ON HOVER */
+}
+ul#social li div:hover {
+	background-color: transparent; /* THIS CHANGES THE BACKGROUND COLOUR ON HOVER */
+	border: 1px solid #787878; /* THIS CHANGES THE BORDER COLOUR ON HOVER */
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+ul#social li a {
+    text-decoration: none
+}
+ul#social li:first-child {
+    margin-left: 0
+}
+ul#social li a:focus,
+ul#social li a.focus {
+	outline: none;
+}
+@media (max-width: 478px) {
+	ul#social {
+	transform: scale(0.95);
+}
+	ul#social li {
+	margin-left: 3px;	
+}
+}

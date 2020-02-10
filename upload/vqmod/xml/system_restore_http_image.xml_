@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[IMAGE + HTTPS_IMAGE Links]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[Ernie - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="catalog/controller/payment/skrill.php,catalog/controller/total/voucher.php,catalog/model/checkout/order.php" error="skip">
+<operation error="skip">
+<search position="replace"><![CDATA[$this->config->get('config_url') . 'image/']]></search>
+<add><![CDATA[HTTP_IMAGE]]></add>
+</operation>
+    
+<operation error="skip">
+<search position="replace"><![CDATA[$this->config->get('config_ssl') . 'image/']]></search>
+<add><![CDATA[HTTPS_IMAGE]]></add>
+</operation>
+</file>
+	
+</modification>

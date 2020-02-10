@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[Customer Page Save Fix]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[The Krotek - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="admin/model/sale/order.php">
+<operation error="log">
+<search position="before"><![CDATA[$this->db->query("UPDATE `" . DB_PREFIX . "order` SET firstname]]></search>
+<add><![CDATA[
+	$this->db->query("UPDATE `".DB_PREFIX."order` SET customer_id = '".(int)$data['customer_id']."', customer_group_id = '".(int)$data['customer_group_id']."' WHERE order_id = '".(int)$order_id."'");
+]]></add>
+</operation>
+</file>
+
+</modification>

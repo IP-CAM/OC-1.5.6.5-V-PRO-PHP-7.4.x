@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[Category - Information View Button]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[Allshop2u.com - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="admin/controller/catalog/category.php">
+<operation error="log">
+<search position="before"><![CDATA[protected function validateForm() {]]></search>
+<add><![CDATA[
+	public function rewrite($link) {
+	if ($this->config->get('config_seo_url')) {
+	$url_info = parse_url(str_replace('&amp;', '&', $link));
+	$url = ''; 
+	$data = array();
+	parse_str($url_info['query'], $data);
+	foreach ($data as $key => $value) {
+	if (isset($data['route'])) {
+	if (($data['route'] == 'product/product' && $key == 'product_id') || (($data['route'] == 'product/manufacturer/info' || $data['route'] == 'product/product') && $key == 'manufacturer_id') || ($data['route'] == 'information/information' && $key == 'information_id')) {
+	$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = '" . $this->db->escape($key . '=' . (int)$value) . "'");
+	if ($query->num_rows) {
+	$url .= '/' . $query->row['keyword'];
+	unset($data[$key]);
+	}
+	} elseif ($key == 'path') {
+	$categories = explode('_', $value);
+	foreach ($categories as $category) {
+	$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = 'category_id=" . (int)$category . "'");
+	if ($query->num_rows) {
+	$url .= '/' . $query->row['keyword'];
+	}
+	}
+	unset($data[$key]);
+	}
+	}
+	}
+	if ($url) {
+	unset($data['route']);
+	$query = '';
+	if ($data) {
+	foreach ($data as $key => $value) {
+	$query .= '&' . $key . '=' . $value;
+	}
+	if ($query) {
+	$query = '?' . trim($query, '&');
+	}
+	}
+	return $url_info['scheme'] . '://' . $url_info['host'] . (isset($url_info['port']) ? ':' . $url_info['port'] : '') . str_replace('/index.php', '', $url_info['path']) . $url . $query;
+	} else {
+	return $link;
+	}
+	} else {
+	return $link;	
+	}
+	}
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="after"><![CDATA[$action = array();]]></search>
+<add><![CDATA[
+	$action[] = array(
+	'text' => 'View',
+	'href' => $this->rewrite(str_replace('admin/','',$this->url->link('product/category','path=' . $result['category_id']))),
+	);
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="after"><![CDATA[$category_info = $this->model_catalog_category->getCategory($this->request->get['category_id']);]]></search>
+<add><![CDATA[
+	$this->data['view_href']=$this->rewrite(str_replace('admin/','',$this->url->link('product/category','path=' . $this->request->get['category_id'])));
+]]></add>
+</operation>
+</file>
+
+<file name="admin/controller/catalog/information.php">
+<operation error="log">
+<search position="before"><![CDATA[protected function validateForm() {]]></search>
+<add><![CDATA[
+	public function rewrite($link) {
+	if ($this->config->get('config_seo_url')) {
+	$url_info = parse_url(str_replace('&amp;', '&', $link));
+	$url = ''; 
+	$data = array();
+	parse_str($url_info['query'], $data);
+	foreach ($data as $key => $value) {
+	if (isset($data['route'])) {
+	if (($data['route'] == 'product/product' && $key == 'product_id') || (($data['route'] == 'product/manufacturer/info' || $data['route'] == 'product/product') && $key == 'manufacturer_id') || ($data['route'] == 'information/information' && $key == 'information_id')) {
+	$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = '" . $this->db->escape($key . '=' . (int)$value) . "'");
+	if ($query->num_rows) {
+	$url .= '/' . $query->row['keyword'];
+	unset($data[$key]);
+	}
+	} elseif ($key == 'path') {
+	$categories = explode('_', $value);
+	foreach ($categories as $category) {
+	$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = 'category_id=" . (int)$category . "'");
+	if ($query->num_rows) {
+	$url .= '/' . $query->row['keyword'];
+	}
+	}
+	unset($data[$key]);
+	}
+	}
+	}
+	if ($url) {
+	unset($data['route']);
+	$query = '';
+	if ($data) {
+	foreach ($data as $key => $value) {
+	$query .= '&' . $key . '=' . $value;
+	}
+	if ($query) {
+	$query = '?' . trim($query, '&');
+	}
+	}
+	return $url_info['scheme'] . '://' . $url_info['host'] . (isset($url_info['port']) ? ':' . $url_info['port'] : '') . str_replace('/index.php', '', $url_info['path']) . $url . $query;
+	} else {
+	return $link;
+	}
+	} else {
+	return $link;	
+	}
+	}
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="after"><![CDATA[$action = array();]]></search>
+<add><![CDATA[
+	$action[] = array(
+	'text' => 'View',
+	'href' => $this->rewrite(str_replace('admin/','',$this->url->link('information/information','information_id=' . $result['information_id']))),
+	);
+]]></add>
+</operation>
+
+<operation error="log">
+<search position="after"><![CDATA[$information_info = $this->model_catalog_information->getInformation($this->request->get['information_id']);]]></search>
+<add><![CDATA[
+	$this->data['view_href']=$this->rewrite(str_replace('admin/','',$this->url->link('information/information','information_id=' . $this->request->get['information_id'])));
+]]></add>
+</operation>
+</file>
+
+<file name="admin/view/template/catalog/information_list.tpl">
+<operation error="log">
+<search position="replace"><![CDATA[href="<?php echo $action['href']; ?>"]]></search>
+<add><![CDATA[
+	href="<?php echo $action['href']; ?>"
+	<?PHP
+	if($action['text']=='View')
+	{
+	echo ' target="_blank"';
+	}
+	?>
+]]></add>
+</operation>
+</file>
+
+<file name="admin/view/template/catalog/information_form.tpl">
+<operation error="log">
+<search position="replace"><![CDATA[<div class="buttons">]]></search>
+<add><![CDATA[
+	<div class="buttons">
+	<?PHP if(!empty($view_href)) { ?>
+	<a target="_blank" href='<?PHP echo $view_href ?>' class="button">View</a>
+	<?php } ?>
+]]></add>
+</operation>
+</file>
+
+</modification>

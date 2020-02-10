@@ -1,0 +1,3 @@
+.customBlockTitle {	padding:7px;	font-size:15px;	text-align:left;	background:#efefef;	color: #003A88;	font-weight: bold;	text-align: center;}
+.customBlockContent {	padding:16px 18px;}
+.list tbody td a {	text-decoration: none !important;}

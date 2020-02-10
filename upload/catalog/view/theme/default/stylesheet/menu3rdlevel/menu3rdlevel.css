@@ -1,0 +1,58 @@
+#menu ul li ul li{
+position: relative;	
+}
+
+#menu .menu3rdlevel{
+position: absolute;
+top: -6px;
+left: 100%;	
+display: none;
+
+z-index:1001;
+min-width:160px;
+padding:5px 0 0 0;
+
+background-color:#fff; /* edit or add style here */
+border:1px solid #ccc;
+border:1px solid rgba(0,0,0,.15);
+border-radius: 4px;
+-webkit-box-shadow:0 6px 12px rgba(0,0,0,.175);
+box-shadow:0 6px 12px rgba(0,0,0,.175);
+background-clip: padding-box;
+}
+
+
+#menu .menu3rdlevel > a{
+color: #23A1D1; /* menu3rdlevel 'see all' color */
+}
+
+#menu .menu3rdlevel_inner{
+display: table;	
+}
+
+#menu .menu3rdlevel_inner ul{
+display: table-cell;
+}
+
+@media (min-width: 768px) {
+	#menu ul li ul li:hover > .menu3rdlevel {
+		display: block;
+	}
+	
+	#menu .arrow{
+		background-image: url(../../image/menu3rdlevel/arrow.png); /* replace with custom arrow if you wish (10 x 8 default) */
+		background-repeat: no-repeat;
+		background-position: right center;
+	}
+	
+	#menu ul li ul li:hover > a.arrow{
+		background-image: url(../../image/menu3rdlevel/arrow_w.png); /* another arrow for hover (or delete) */
+		
+		background-color: #229ac8; /* replace with your color or delete (for the parent category when hover) */
+		color: #FFF;
+	}
+	
+	#menu ul li ul li > a{ /* uncomment this for singe line link */
+		/* white-space: nowrap; */	
+	}
+}

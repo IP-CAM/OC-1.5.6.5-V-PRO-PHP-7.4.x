@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[Make Headercode cookiefree]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[Ernie - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="catalog/view/theme/default/template/common/header.tpl">
+<operation error="log">
+<search position="replace"><![CDATA[<link href="catalog/view/]]></search>
+<add><![CDATA[<link href="http://ebikes.li/shop/catalog/view/]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace"><![CDATA[<link href="<?php echo str_replace]]></search>
+<add><![CDATA[<link href="http://ebikes.li/shop/<?php echo str_replace]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace"><![CDATA[<script async src="catalog/view/]]></search>
+<add><![CDATA[<script async src="http://ebikes.li/shop/catalog/view/]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace"><![CDATA[<script src="<?php echo str_replace]]></search>
+<add><![CDATA[<script src="http://ebikes.li/shop/<?php echo str_replace]]></add>
+</operation>
+
+<operation error="log">
+<search position="replace"><![CDATA[<script src="catalog/view/javascript]]></search>
+<add><![CDATA[<script src="http://ebikes.li/shop/catalog/view/javascript]]></add>
+</operation>
+</file>
+
+</modification>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id><![CDATA[Sitemap cache-time Changer]]></id>
+<version><![CDATA[OC 1.5.6.5 - OC2 Themes]]></version>
+<vqmver><![CDATA[2.6.1]]></vqmver>
+<author><![CDATA[Snastik - IP_CAM]]></author>
+<email><![CDATA[webmaster@opencart.li]]></email>
+<link><![CDATA[http://www.opencart.li]]></link>
+
+<file name="system/library/cache.php">
+<operation error="log">
+<search position="after" index="1"><![CDATA[public function set($key, $value) {]]></search>
+<add><![CDATA[
+	if ($key == 'sitemap') $this->expire = 90000;
+]]></add>
+</operation>
+</file>
+
+</modification>

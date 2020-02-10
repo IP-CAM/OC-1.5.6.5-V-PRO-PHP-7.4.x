@@ -1,0 +1,1 @@
+jQuery(function(e){e("table.list tr").mouseover(function(){e(this).addClass("over")}).mouseout(function(){e(this).removeClass("over")}),e("table.list tr:nth-child(even)").addClass("even")});
