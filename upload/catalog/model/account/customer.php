@@ -2,8 +2,8 @@
 class ModelAccountCustomer extends Model {
 	public function getEmail($data) {
 		$query = $this->db->query("SELECT email FROM " . DB_PREFIX . "customer WHERE SUBSTRING(sha1(CONCAT('" . $data['key'] . "',`email`)),1,20) = '" . $data['passkey'] ."' AND status = '1' AND approved = '1'");
-	}
-
+	return $query->row;
+		
 	public function addCustomer($data) {
 		if (isset($data['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($data['customer_group_id'], $this->config->get('config_customer_group_display'))) {
 			$customer_group_id = $data['customer_group_id'];
