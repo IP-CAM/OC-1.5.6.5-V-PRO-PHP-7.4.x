@@ -3,7 +3,7 @@
 	it comes to technical Wisdom and Knowledge about an Onlineshop Software in Use.
 	The best open E-Car is worthless, out in the Desert, and with empty Batteries ...
 
-# The fasted freeware OC, in the North, South, East+West
+# The fastest freeware OC, in the North, South, East+West
     Based on famous PEKU's OpenCart Edge OC v.1.5.6.5 Bootstrap OC2-Theme Adoption.
     Combines Opencart 1.5.6.5_rc with OpenCart v.2.0.x designed responsive Themes.
     The Best of MaxD's famous OpenShop Admin Extensions, partly enhanced, and built-in.
