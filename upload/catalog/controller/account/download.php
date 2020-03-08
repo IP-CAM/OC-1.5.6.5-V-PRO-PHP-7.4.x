@@ -59,8 +59,8 @@ class ControllerAccountDownload extends Controller {
 	$results = $this->model_account_download->getDownloads(($page - 1) * $this->config->get('config_catalog_limit'), $this->config->get('config_catalog_limit'));
 
 	foreach ($results as $result) {
-	if (file_exists(DIR_DOWNLOAD . $result['filename'])) {
-	$size = filesize(DIR_DOWNLOAD . $result['filename']);
+	if (is_file(DIR_DOWNLOAD . basename($result['filename']))) {
+	$size = filesize(DIR_DOWNLOAD . basename($result['filename']));
 
 	$i = 0;
 
