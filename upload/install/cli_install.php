@@ -126,7 +126,7 @@ function valid($options) {
 function install($options) {
 	$check = check_requirements();
 	if ($check[0]) {
-		setup_mysqli($options);
+		setup_mysql($options);
 		write_config_files($options);
 		dir_permissions();
 	} else {
@@ -150,8 +150,12 @@ function check_requirements() {
 		$error = 'Warning: OpenCart will not work with session.auto_start enabled!';
 	}
 
+	if (!function_exists('openssl_encrypt')) {
+		$this->error['warning'] = 'Warning: openssl extension needs to be loaded for OpenCart to work!';
+	}
+	
 	if (!extension_loaded('mysqli')) {
-		$error = 'Warning: MySQLi extension needs to be loaded for OpenCart to work!';
+		$error = 'Warning: MySQL extension needs to be loaded for OpenCart to work!';
 	}
 
 	if (!extension_loaded('gd')) {
@@ -160,10 +164,6 @@ function check_requirements() {
 
 	if (!extension_loaded('curl')) {
 		$error = 'Warning: CURL extension needs to be loaded for OpenCart to work!';
-	}
-
-	if (!function_exists('mcrypt_encrypt')) {
-		$error = 'Warning: mCrypt extension needs to be loaded for OpenCart to work!';
 	}
 
 	if (!extension_loaded('zlib')) {
@@ -206,7 +206,7 @@ function check_requirements() {
 }
 
 
-function setup_mysqli($dbdata) {
+function setup_mysql($dbdata) {
 	global $loader, $registry;
 	$loader->model('install');
 	$model = $registry->get('model_install');
@@ -238,7 +238,7 @@ function write_config_files($options) {
 	$output .= 'define(\'DIR_LOGS\', \'' . DIR_OPENCART . 'system/logs/\');' . "\n\n";
 
 	$output .= '// DB' . "\n";
-	$output .= 'define(\'DB_DRIVER\', \'mysqli\');' . "\n";
+	$output .= 'define(\'DB_DRIVER\', \'mysql\');' . "\n";
 	$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($options['db_host']) . '\');' . "\n";
 	$output .= 'define(\'DB_USERNAME\', \'' . addslashes($options['db_user']) . '\');' . "\n";
 	$output .= 'define(\'DB_PASSWORD\', \'' . addslashes($options['db_password']) . '\');' . "\n";
@@ -277,7 +277,7 @@ function write_config_files($options) {
 	$output .= 'define(\'DIR_CATALOG\', \'' . DIR_OPENCART . 'catalog/\');' . "\n\n";
 
 	$output .= '// DB' . "\n";
-	$output .= 'define(\'DB_DRIVER\', \'mysqli\');' . "\n";
+	$output .= 'define(\'DB_DRIVER\', \'mysql\');' . "\n";
 	$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($options['db_host']) . '\');' . "\n";
 	$output .= 'define(\'DB_USERNAME\', \'' . addslashes($options['db_user']) . '\');' . "\n";
 	$output .= 'define(\'DB_PASSWORD\', \'' . addslashes($options['db_password']) . '\');' . "\n";
@@ -322,7 +322,7 @@ case "install":
 			exit(1);
 		}
 		install($options);
-		echo "SUCCESS! Opencart is now successfully installed on your Server\n";
+		echo "SUCCESS! Opencart successfully installed on your server\n";
 		echo "Store link: " . $options['http_server'] . "\n";
 		echo "Admin link: " . $options['http_server'] . "admin/\n\n";
 	} catch (ErrorException $e) {
