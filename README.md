@@ -56,6 +56,9 @@
     Official OpenCart.com Github Download Site for OpenCart Release Candidate v.1.5.6.5_rc:
     https://github.com/opencart/opencart/tree/c2c8f9c4c8fce44bb81b394e235913306fb75707
     
+    Latest PHP-7 McCrypt Installation Fixes already built-in:
+    https://www.opencart.com/index.php?route=marketplace/extension/info&extension_id=38012
+    
     Condor2's refined and latest updated Version of PEKU's Opencart v.1.5.6.5 EDGE:     
     https://github.com/condor2/Opencart-1.5.6.5-Edge
     
