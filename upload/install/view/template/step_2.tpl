@@ -64,7 +64,7 @@
           <th width="15%" align="center"><b>Status</b></th>
         </tr>
         <tr>
-          <td>MySqli:</td>
+          <td>MySQL:</td>
           <td><?php echo extension_loaded('mysqli') ? 'On' : 'Off'; ?></td>
           <td>On</td>
           <td align="center"><?php echo extension_loaded('mysqli') ? '<img src="view/image/good.png" alt="Good" />' : '<img src="view/image/bad.png" alt="Bad" />'; ?></td>
@@ -80,6 +80,12 @@
           <td><?php echo extension_loaded('curl') ? 'On' : 'Off'; ?></td>
           <td>On</td>
           <td align="center"><?php echo extension_loaded('curl') ? '<img src="view/image/good.png" alt="Good" />' : '<img src="view/image/bad.png" alt="Bad" />'; ?></td>
+        </tr>
+        <tr>
+          <td>Openssl:</td>
+          <td><?php echo function_exists('openssl_encrypt') ? 'On' : 'Off'; ?></td>
+          <td>On</td>
+          <td align="center"><?php echo function_exists('openssl_encrypt') ? '<img src="view/image/good.png" alt="Good" />' : '<img src="view/image/bad.png" alt="Bad" />'; ?></td>
         </tr>
         <tr>
           <td>ZIP:</td>
