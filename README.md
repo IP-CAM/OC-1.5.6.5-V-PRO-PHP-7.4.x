@@ -34,23 +34,23 @@
     To me, you're a DEV, if you wanna use it now, so, help me, to fix Misses, not the opposite!
 
 # IMPORTANT THINGS TO CHANGE FIRST, before installing anything
-    1. RENAME the ROOT and ADMIN config-dist.php Files into config.php !
+ 1. RENAME the ROOT and ADMIN config-dist.php Files into config.php !
 
-    2. Check the Database for YOUR_SHOP_COM and YOUR_SHOP.COM Entries, and CHANGE them, to MATCH your Site PATHS and URL.
+ 2. Check the Database for YOUR_SHOP_COM and YOUR_SHOP.COM Entries, and CHANGE them, to MATCH your Site PATHS and URL.
 
-    3. Also change the Admin admin@YOUR_SHOP.COM + User eMail beni@YOUR_SHOP.COM to match VALID Test Mail + User eMail Addresses.
+ 3. Also change the Admin admin@YOUR_SHOP.COM + User eMail beni@YOUR_SHOP.COM to match VALID Test Mail + User eMail Addresses.
 
-    4. Admin Demo Access Credentials: Admin / Password  ---  PRESENT Customer Access: beni@(WHATEVER NEW SITENAME you added!) / beno
+ 4. Admin Demo Access Credentials: Admin / Password  ---  PRESENT Customer Access: beni@(WHATEVER NEW SITENAME you added!) / beno
 
-    5. If you install the MyISAM default Database, ONLY index your DB by use of the TURBO.php File, you can later still SWITCH to INNO-DB in the ADMIN Section.
+ 5. If you install the MyISAM default Database, ONLY index your DB by use of the TURBO.php File, you can later still SWITCH to INNO-DB in the ADMIN Section.
 
-    6. You might also select the INNODB coded Installation-Database, it's not tested, but it should also work.
+ 6. You might also select the INNODB coded Installation-Database, it's not tested, but it should also work.
 
-    7. You might have to re-install VqMod after a successful Installation, by clicking www.YOUR_SHOP.COM/vqmod/install/, to make VqMod work.
+ 7. You might have to re-install VqMod after a successful Installation, by clicking www.YOUR_SHOP.COM/vqmod/install/, to make VqMod work.
 
-    8. RENAME the .htaccess.txt File to .htaccess, to make it work as well.
+ 8. RENAME the .htaccess.txt File to .htaccess, to make it work as well.
 
-    9. Good Luck ! Don't forget, this is a DEVELOPER Version, with all the Consequences involved !
+ 9. Good Luck ! Don't forget, this is a DEVELOPER Version, with all the Consequences involved !
 
 # Links:
     Official OpenCart.com Github Download Site for OpenCart Release Candidate v.1.5.6.5_rc:
