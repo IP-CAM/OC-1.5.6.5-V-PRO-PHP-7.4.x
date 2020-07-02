@@ -14,7 +14,7 @@
     
     The best OpenShop Administration Tools and many additional Modules already built-in.
     
-    VqMod v.2.6.1 Engine plus ~50 VqMod Extensions are already implemented, and mostly active.
+    VqMod PRO v.2.6.1 Engine plus ~50 VqMod Extensions are already implemented, and mostly active.
     
     MaxD's genious Automatic VqMod-PRO Version 2.6.1 is optionally available on Request. 
     
