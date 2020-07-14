@@ -5,7 +5,7 @@
 
 # The fastest freeware OC, in the North, South, East+West!
     Based on famous PEKU's OpenCart Edge v.1.5.6.5 Bootstrap OC2-Theme Adoption.
-    Combines Opencart 1.5.6.5_rc with OpenCart v.2.0.x designed responsive Themes.
+    Combines Opencart 1.5.6.5_rc with OpenCart v.2.0.3.1 designed responsive Themes.
     The Best of MaxD's famous OpenShop Admin Extensions, partly enhanced, and built-in.
     Security- and Codewise refined and updated to match MySQLi (i.E.utf8mb4) and PHP7.x.
 
