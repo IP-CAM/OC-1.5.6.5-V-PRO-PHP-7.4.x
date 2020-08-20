@@ -160,7 +160,7 @@ class ControllerToolTweaks extends Controller {
                 $info['file'] = $file;
                 $info['enabled'] = !strpos($vqmodd, '.xml_');
 
-                $info['hidden'] = (($file{0}=='_') or ($file{0}=='-') or ($file{0}=='z') or ($file=='vqmod_opencart'));
+                $info['hidden'] = (($file[0]=='_') or ($file[0]=='-') or ($file[0]=='z') or ($file=='vqmod_opencart'));
                 if ($info['hidden']) $nhidden++;
                 $info['openshop'] = (strpos($vqmodd, "OpenShop/")!==false);
 
