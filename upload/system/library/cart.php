@@ -340,7 +340,10 @@ class Cart {
 	}
 
 	public function update($key, $qty) {
-		if ((int)$qty && ((int)$qty > 0)) {
+// Protection from object injection in cart 
+// https://github.com/opencart-ce/opencart-ce/commit/c2aafc823bd85876f5e888f8ebc421069a5e076f
+//	if ((int)$qty && ((int)$qty > 0)) {
+		if ((int)$qty && ((int)$qty > 0) && isset($this->session->data['cart'][$key])) {
 			$this->session->data['cart'][$key] = (int)$qty;
 		} else {
 			$this->remove($key);
