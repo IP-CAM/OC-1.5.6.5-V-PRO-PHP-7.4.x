@@ -40,7 +40,7 @@ class Image {
 
 		$extension = strtolower($info['extension']);
 
-		if (is_resource($this->image)) {
+		if (is_resource($this->image) || is_object($this->image)) {
 			if ($extension == 'jpeg' || $extension == 'jpg') {
 				imageinterlace($this->image, true);
 				imagejpeg($this->image, $file, $quality);
