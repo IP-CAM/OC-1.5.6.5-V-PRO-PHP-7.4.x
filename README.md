@@ -1,9 +1,9 @@
 # OpenCart v.1.5.6.5 V-PRO Version
-	Created, to meet the Demand of those, afraid of much depending on Others, when 
+	Created, to meet the Demand of those, affraid of much depending on Others, when 
 	it comes to technical Wisdom and Knowledge about an Onlineshop Software in Use.
 	The best open E-Car is worthless, out in the Desert, and with empty Batteries ...
 
-# The fastest freeware OC, in the North, South, East+West!
+# The fastest freeware Opencart, in the North, South, East+West!
     Based on famous PEKU's OpenCart Edge v.1.5.6.5 Bootstrap OC2-Theme Adoption.
     Combines Opencart 1.5.6.5_rc with OpenCart v.2.0.3.1 designed responsive Themes.
     The Best of MaxD's famous OpenShop Admin Extensions, partly enhanced, and built-in.
