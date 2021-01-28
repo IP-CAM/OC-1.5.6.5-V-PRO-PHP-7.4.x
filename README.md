@@ -1,4 +1,4 @@
-# Opencart v.1.5.6.5_rc based V-PRO Version
+# Opencart v.1.5.6.5_RC based V-PRO Version
 	Created, to meet the Demand of those, affraid of much depending on Others, when 
 	it comes to technical Wisdom and Knowledge about an Onlineshop Software in Use.
 	The best open E-Car is worthless, out in the Desert, and with empty Batteries ...
