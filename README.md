@@ -36,17 +36,23 @@
 # IMPORTANT THINGS TO CHANGE FIRST, before installing anything
  1. RENAME the ROOT and ADMIN config-dist.php Files into config.php !
 
- 2. Check the Database for YOUR_SHOP_COM and YOUR_SHOP.COM Entries, and CHANGE them, to MATCH your Site PATHS and URL.
+ 2. Check the Database for YOUR_SHOP_COM and YOUR_SHOP.COM Entries, and CHANGE them, 
+    to MATCH your Site PATHS and URL.
 
- 3. Also change the Admin admin@YOUR_SHOP.COM + User eMail beni@YOUR_SHOP.COM to match VALID Test Mail + User eMail Addresses.
+ 3. Also change the Admin admin@YOUR_SHOP.COM + User eMail beni@YOUR_SHOP.COM to match 
+    VALID Test Mail + User eMail Addresses.
 
- 4. Admin Demo Access Credentials: Admin / Password  ---  PRESENT Customer Access: beni@(WHATEVER NEW SITENAME you added!) / beno
+ 4. Admin Demo Access Credentials: Admin / Password  ---  PRESENT Customer Access: beni@
+    (WHATEVER NEW SITENAME you added!) / beno
 
- 5. If you install the MyISAM default Database, ONLY index your DB by use of the TURBO.php File, you can later still SWITCH to INNO-DB in the ADMIN Section.
+ 5. If you install the MyISAM default Database, ONLY index your DB by use of the TURBO.php 
+    File, you can later still SWITCH to INNO-DB in the ADMIN Section.
 
- 6. You might also select the INNODB coded Installation-Database, it's not tested, but it should also work.
+ 6. You might also select the INNODB coded Installation-Database, it's not tested, but it should 
+    also work.
 
- 7. You might have to re-install VqMod after a successful Installation, by clicking www.YOUR_SHOP.COM/vqmod/install/, to make VqMod work.
+ 7. You might have to re-install VqMod after a successful Installation, by clicking 
+    www.YOUR_SHOP.COM/vqmod/install/, to make VqMod work.
 
  8. RENAME the .htaccess.txt File to .htaccess, to make it work as well.
 
@@ -65,8 +71,10 @@
     Peku's other OpenCart Extensions:     
     https://www.opencart.com/index.php?route=marketplace/extension&filter_member=peku
     
-    OC v.2.0.x Themes, ONLY use their Header.tpl + Footer.tpl + the 'theme-contained' x.CSS + x.JS Files with little Changes:     
+    OC v.2.0.x Themes, ONLY use their Header.tpl + Footer.tpl + the 'theme-contained' 
+    x.CSS + x.JS Files with little Changes:     
     https://www.opencart.com/index.php?route=marketplace/extension&filter_license=0&filter_category_id=1&filter_download_id=41
     
-    A wide Range of matching sample Themes can be seen here. The Site itself has not been actualized for some Time.
+    A wide Range of matching sample Themes can be seen here. The Site itself has not 
+    been actualized for some Time.
     http://www.opencart.li/
