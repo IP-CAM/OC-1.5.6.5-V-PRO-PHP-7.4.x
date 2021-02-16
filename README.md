@@ -2,7 +2,7 @@
 Created, to meet the Demand of those, affraid of much depending on Others, when it comes to technical Wisdom and Knowledge about an Onlineshop Software in Use. The best open E-Car is worthless, out in the Desert, and with empty Batteries ...
 
 # The fastest freeware Opencart, in the North, South, East+West!
-Based on famous PEKU's OpenCart Edge v.1.5.6.5 Bootstrap OC2-Theme Adoption. Combines Opencart 1.5.6.5_rc with OpenCart v.2.0.3.1 designed responsive Themes. The Best of MaxD's famous OpenShop Admin Extensions, partly enhanced, and built-in. Security- and Codewise refined and updated to match MySQLi (i.E.utf8mb4) and PHP7.x.
+Based on famous PEKU's OpenCart Edge v.1.5.6.5 Bootstrap OC2-Theme Adoption. Combines Opencart 1.5.6.5_rc with OpenCart v.2.0.3.1 designed responsive Themes. The Best of MaxD's famous OpenShop Admin Extensions, partly enhanced, and built-in. Security- and Codewise refined and updated to match MySQLi (i.E.utf8mb4) and PHP 7.4.15
 
 # Features:
 Slightly updated + secured Engine + System from last Version Opencart v.1.5.6.5_rc.
